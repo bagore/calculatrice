@@ -139,6 +139,7 @@ CLREOL:=\e[K
 lColorCC        :=${COL_ORG}
 lColorDoc       :=${COL_GRN}
 lColorLD        :=${COL_MAG}
+lColorRC        :=${COL_YLW}
 lColorRM        :=${COL_RED}
 
 
@@ -238,7 +239,23 @@ show_sources_tests: directories	#help: Displays detected test source files.
 
 #Copy Resources from Resources Directory to Target Directory
 resources: directories	#help: Copy Resources from Resources Directory to Target Directory.
-#	@cp $(RESDIR)/* $(TARGETDIR)/
+	@for file in `find $(RESDIR) -type f`; \
+	do \
+		lDestFile=$$(echo $$file |sed -e "s@$(RESDIR)@$(TARGETDIR)@"); \
+		if [ ! -d $$(dirname "$$lDestFile") ] ; \
+		then \
+			echo -e "${lColorRC}    RCD $$(dirname "$$lDestFile") ${CLREOL}${COL_STD}" $(TRACE_LOG) ;\
+			mkdir -p $$(dirname "$$lDestFile"); \
+		fi; \
+		\
+		lRsync_test=$$(rsync -aEim --dry-run "$$file" "$$lDestFile"); \
+		#echo "lRsync_test == $$lRsync_test";\
+		if [ -n "$$lRsync_test" ] ; \
+		then \
+			echo -e "${lColorRC}    RC  $$lDestFile ${CLREOL}${COL_STD}" $(TRACE_LOG) ;\
+			rsync -aEim "$$file" "$$lDestFile" $(TRACE_REDIRECT); \
+		fi; \
+	done #cp $(RESDIR)/* $(TARGETDIR)/
 
 
 ##  @brief Convenience target to make directories we'll need.
