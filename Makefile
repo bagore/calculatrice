@@ -79,7 +79,8 @@ TARGET_TESTS_AUTO	:= tests-auto
 SRCDIR          := src
 INCDIR          := inc
 BUILDDIR        := build
-BUILDDIRTST     := build/tests/
+BUILDDIRSRC     := $(BUILDDIR)/src/
+BUILDDIRTST     := $(BUILDDIR)/tests/
 DIR_OUTPUT      := ./out/
 TARGETDIR       := $(DIR_OUTPUT)/bin
 TARGETDIR_TST   :=$(TARGETDIR)/tests/
@@ -123,13 +124,13 @@ SHELL:=/bin/bash
 COL_STD:=\e[0m
 COL_BLK:=\e[40m
 COL_BLU:=\e[44m
-COL_CYN:=\e[46m
+COL_CYN:=\e[30;46m
 COL_GRE:=\e[47m
 COL_GRN:=\e[30;42m
 COL_ORG:=\e[30;43m
 COL_MAG:=\e[30;45m
 COL_RED:=\e[41m
-COL_YLW:=\e[43m
+COL_YLW:=\e[30;103m
 
 # Control char to fill a line
 CLREOL:=\e[K
