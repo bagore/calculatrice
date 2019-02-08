@@ -189,8 +189,12 @@ OBJECTS_TST	:= $(patsubst $(TESTSDIR)/%,$(BUILDDIRTST)/%,$(SOURCES_TST:.$(SRCEXT
 #   Target aliases
 # ------------------------------------------------------------------------------
 
-##  @brief  Defauilt Make target.
-default: show_sources resources $(TARGET)
+##  @brief  Default Make target.
+default: target
+
+
+##  @brief  Target to build the main target.
+target: show_sources resources $(TARGET)
 
 
 ##  @brief  Target to build everything.
@@ -207,6 +211,10 @@ distclean: cleaner	#help: Same as 'make cleaner'.
 
 ##  @brief  Target to build development documentation.
 doc: doxygen	#help: build development documentation.
+
+
+##  @brief  Target to build all test executables.
+tests: show_sources_tests resources $(TARGET_TESTS_AUTO) #help: Builds all test executables.
 
 
 
