@@ -178,7 +178,7 @@ endif
 # from what they found in src/ and tests/ directories.
 SOURCES		:= $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 SOURCES_TST	:= $(shell find $(TESTSDIR) -type f -name *.$(SRCEXT))
-OBJECTS		:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
+OBJECTS		:= $(patsubst $(SRCDIR)/%,$(BUILDDIRSRC)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
 OBJECTS_TST	:= $(patsubst $(TESTSDIR)/%,$(BUILDDIRTST)/%,$(SOURCES_TST:.$(SRCEXT)=.$(OBJEXT)))
 
 
@@ -247,7 +247,7 @@ directories:	#help: Convenience target to make directories we'll need.
 	@mkdir -p $(RESDIR)             $(TRACE_REDIRECT)
 	@mkdir -p $(TARGETDIR)          $(TRACE_REDIRECT)
 	@mkdir -p $(TARGETDIR_TST)	$(TRACE_REDIRECT)
-	@mkdir -p $(BUILDDIR)           $(TRACE_REDIRECT)
+	@mkdir -p $(BUILDDIRSRC)        $(TRACE_REDIRECT)
 	@mkdir -p $(BUILDDIRTST)        $(TRACE_REDIRECT)
 	@mkdir -p $(DIR_DOC_OUT)        $(TRACE_REDIRECT)
 
@@ -263,7 +263,7 @@ directories:	#help: Convenience target to make directories we'll need.
 # ------------------------------------------------------------------------------
 
 ##  @brief  Target to generate object files from main sources.
-$(BUILDDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
+$(BUILDDIRSRC)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
 	@echo -e "${lColorCC}    CXX $@ ${CLREOL}${COL_STD}" $(TRACE_LOG)
 	@mkdir -p $(dir $@) $(TRACE_REDIRECT)
 	@if [ ! "$(TRACES)" -eq "0" ] ; then \
@@ -299,7 +299,7 @@ $(TARGET): $(OBJECTS)	#help: Main application's target.
 
 
 ##  @brief  Automated tests target.
-$(TARGET_TESTS_AUTO): $(OBJECTS_TST) $(filter-out $(BUILDDIR)/main.$(OBJEXT), $(OBJECTS))	#help: Automated tests target.
+$(TARGET_TESTS_AUTO): $(OBJECTS_TST) $(filter-out $(BUILDDIRSRC)/main.$(OBJEXT), $(OBJECTS))	#help: Automated tests target.
 	@echo -e "${lColorLD}    LD  $@${CLREOL}${COL_STD}" $(TRACE_LOG)
 	@if [ ! "$(TRACES)" -eq "0" ] ; then \
 		echo "$(CXX) -o $(TARGETDIR_TST)/$(TARGET_TESTS_AUTO) $^ $(LIB)" $(TRACE_REDIRECT); \
