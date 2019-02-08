@@ -141,6 +141,7 @@ lColorDoc       :=${COL_GRN}
 lColorLD        :=${COL_MAG}
 lColorRC        :=${COL_YLW}
 lColorRM        :=${COL_RED}
+lColorRun       :=${COL_CYN}
 
 
 
@@ -355,11 +356,16 @@ cleaner: clean clean-doc	#help: Full Clean, Objects and Binaries.
 # ------------------------------------------------------------------------------
 
 run-target:	#help: Run the target.
+	@echo -e "${lColorRun}    RUN $(TARGETDIR)/$(TARGET)${CLREOL}$(COL_STD)"
 	$(TARGETDIR)/$(TARGET) $(TRACE_LOG)
 
 
 run-tests-auto:  #help: Run executable for automated tests.
-	$(TARGETDIR_TST)/$(TARGET_TESTS_AUTO) $(TRACE_LOG)
+	@echo -e "${lColorRun}    RUN $(TARGETDIR_TST)/$(TARGET_TESTS_AUTO)${CLREOL}$(COL_STD)"
+	@pushd $(TARGETDIR_TST) 1>/dev/null; \
+		echo "[Repertoire '$$(pwd)']"; \
+		./$(TARGET_TESTS_AUTO) -d no $(TRACE_LOG);\
+	popd;
 
 
 
