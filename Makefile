@@ -363,12 +363,12 @@ cleaner: clean clean-doc	#help: Full Clean, Objects and Binaries.
 #   "run" targets
 # ------------------------------------------------------------------------------
 
-run-target:	#help: Run the target.
+run-target: target	#help: Run the target.
 	@echo -e "${lColorRun}    RUN $(TARGETDIR)/$(TARGET)${CLREOL}$(COL_STD)"
 	$(TARGETDIR)/$(TARGET) $(TRACE_LOG)
 
 
-run-tests-auto:  #help: Run executable for automated tests.
+run-tests-auto: tests	#help: Run executable for automated tests.
 	@echo -e "${lColorRun}    RUN $(TARGETDIR_TST)/$(TARGET_TESTS_AUTO)${CLREOL}$(COL_STD)"
 	@pushd $(TARGETDIR_TST) 1>/dev/null; \
 		echo "[Repertoire '$$(pwd)']"; \
