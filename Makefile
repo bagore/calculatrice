@@ -407,6 +407,10 @@ doxygen: directories	#help: Target to generate Doxygen documentation.
 	@$(BIN_DOXYGEN) $(DIR_DOC)/doxygen/doxygen.conf $(TRACE_REDIRECT)
 
 
+ide-qtcreator-files:	#help: Creates/Updates files for the QtCreator IDE.
+	./scripts/generate-qtcreator-files.sh
+
+
 ##  @brief  Convenience target to open the documentation main page.
 open-docdev:	#help: Convenience target to open the documentation main page.
 	@xdg-open $(DIR_DOC_OUT)/html/index.html
