@@ -378,6 +378,23 @@ run-tests-auto: tests	#help: Run executable for automated tests.
 
 
 # ------------------------------------------------------------------------------
+#   "analysis" targets
+# ------------------------------------------------------------------------------
+run-target-analysis-valgrind: target	#help: Run the target with callgrind analysis.
+	@echo -e "${lColorRun}    RUN VALGRIND $(TARGETDIR)/$(TARGET)${CLREOL}$(COL_STD)"
+	valkyrie $(TARGETDIR)/$(TARGET) $(TRACE_LOG)
+
+
+run-tests-auto-analysis-valgrind: tests	#help: Run the tests with callgrind analysis.
+	@echo -e "${lColorRun}    RUN VALGRIND $(TARGETDIR_TST)/$(TARGET_TESTS_AUTO)${CLREOL}$(COL_STD)"
+	@pushd $(TARGETDIR_TST) 1>/dev/null; \
+		echo "[Repertoire '$$(pwd)']"; \
+		valkyrie ./$(TARGET_TESTS_AUTO) -d no $(TRACE_LOG);\
+	popd;
+
+
+
+# ------------------------------------------------------------------------------
 #   Other targets
 # ------------------------------------------------------------------------------
 
