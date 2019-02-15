@@ -103,8 +103,8 @@ CXX:=g++
 #   Build commands options
 # Flags, Libraries and Includes
 # ------------------------------------------------------------------------------
-CFLAGS      := -Wall -O3 -g #-std=c++11
-LIB         := -lm
+CFLAGS      := -Wall -O3 -g `wx-config --cxxflags` #-std=c++11
+LIB         := `wx-config --libs` -lm
 INC         := -I$(SRCDIR) -I$(INCDIR) -I/usr/local/include
 INCDEP      := -I$(INCDIR)
 
