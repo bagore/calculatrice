@@ -1,23 +1,37 @@
 # Travis example for Modern C++ by Rafał Pocztarski
 # For more languages and info see:
 # https://github.com/rsp/travis-hello#readme
+#
+# It also has been inspired from :
+# https://codeburst.io/getting-started-with-travis-ci-f3223082f256
 
 sudo: false
 language: cpp
-compiler:
-  - gcc
-#  - clang
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    - llvm-toolchain-precise-3.8
-    packages:
-    - g++-6
-    - clang-3.8
-install:
-- "[ $CXX = g++ ] && export CXX=g++-6 || true"
-- "[ $CXX = clang++ ] && export CXX=clang++-3.8 || true"
+
+matrix:
+    include:
+            - os: linux
+              addons:
+                  apt:
+                      sources:
+                      - ubuntu-toolchain-r-test
+                      - llvm-toolchain-precise-3.8
+                      packages:
+                      - g++-7
+                      - clang-3.8
+            - os: osx
+              osx_image: xcode8
+
+#compiler:
+#  - gcc
+##  - clang
+
+## install:
+## - "[ $CXX = g++ ] && export CXX=g++-6 || true"
+## - "[ $CXX = clang++ ] && export CXX=clang++-3.8 || true"
+
+
 script:
   - make
+  - make tests
   - make run-tests-auto
