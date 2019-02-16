@@ -398,6 +398,11 @@ run-tests-auto-analysis-valgrind: tests	#help: Run the tests with callgrind anal
 #   Other targets
 # ------------------------------------------------------------------------------
 
+##  @brief  Calls a script to create a zip archive from the current project.
+archive:	#help: Creates an archive of the current project.
+	@./scripts/generate-archive.sh
+
+
 ##  @brief  Target to generate Doxygen documentation.
 doxygen: directories	#help: Target to generate Doxygen documentation.
 	@echo -e "${lColorDoc}    DOC $@${CLREOL}${COL_STD}" $(TRACE_LOG)
@@ -418,3 +423,4 @@ open-docdev:	#help: Convenience target to open the documentation main page.
 
 help: #help: Print this help.
 	@sed -ne '/@sed/!s/:.*#help: /: \t/p' $(MAKEFILE_LIST)
+
