@@ -258,7 +258,6 @@ resources: directories	#help: Copy Resources from Resources Directory to Target 
 		fi; \
 		\
 		lRsync_test=$$(rsync -aEim --dry-run "$$file" "$$lDestFile"); \
-		#echo "lRsync_test == $$lRsync_test";\
 		if [ -n "$$lRsync_test" ] ; \
 		then \
 			echo -e "${lColorRC}    RC  $$lDestFile ${CLREOL}${COL_STD}" $(TRACE_LOG) ;\
