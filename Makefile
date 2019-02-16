@@ -103,7 +103,7 @@ CXX:=g++
 #   Build commands options
 # Flags, Libraries and Includes
 # ------------------------------------------------------------------------------
-CFLAGS      := -Wall -O3 -g `wx-config --cxxflags` #-std=c++11
+CFLAGS      := -Wall -O3 -g -std=c++11 `wx-config --cxxflags`
 LIB         := `wx-config --libs` -lm
 INC         := -I$(SRCDIR) -I$(INCDIR) -I/usr/local/include
 INCDEP      := -I$(INCDIR)
@@ -120,28 +120,42 @@ SHELL:=/bin/bash
 #   Bash control chars definitions
 # ------------------------------------------------------------------------------
 
+# From https://stackoverflow.com/a/12099167
+ifeq ($(OS),Windows_NT)
+	echo "Windows not supported !"
+	exit 1
+else
+    UNAME_S := $(shell uname -s)
+    ifeq ($(UNAME_S),Linux)
+	ESC_CHAR:="\\e"
+    endif
+    ifeq ($(UNAME_S),Darwin)
+	ESC_CHAR:="\\033"
+    endif
+endif
+
 # Bash colors list
-COL_STD:=\e[0m
-COL_BLK:=\e[40m
-COL_BLU:=\e[44m
-COL_CYN:=\e[30;46m
-COL_GRE:=\e[47m
-COL_GRN:=\e[30;42m
-COL_ORG:=\e[30;43m
-COL_MAG:=\e[30;45m
-COL_RED:=\e[41m
-COL_YLW:=\e[30;103m
+COL_STD:="${ESC_CHAR}[0m"
+COL_BLK:="${ESC_CHAR}[40m"
+COL_BLU:="${ESC_CHAR}[44m"
+COL_CYN:="${ESC_CHAR}[30;46m"
+COL_GRE:="${ESC_CHAR}[47m"
+COL_GRN:="${ESC_CHAR}[30;42m"
+COL_ORG:="${ESC_CHAR}[30;43m"
+COL_MAG:="${ESC_CHAR}[30;45m"
+COL_RED:="${ESC_CHAR}[41m"
+COL_YLW:="${ESC_CHAR}[30;103m"
 
 # Control char to fill a line
-CLREOL:=\e[K
+CLREOL:="${ESC_CHAR}[K"
 
 # Aliases to define which color to use for this makefile's traces
-lColorCC        :=${COL_ORG}
-lColorDoc       :=${COL_GRN}
-lColorLD        :=${COL_MAG}
-lColorRC        :=${COL_YLW}
-lColorRM        :=${COL_RED}
-lColorRun       :=${COL_CYN}
+lColorCC        :="${COL_ORG}"
+lColorDoc       :="${COL_GRN}"
+lColorLD        :="${COL_MAG}"
+lColorRC        :="${COL_YLW}"
+lColorRM        :="${COL_RED}"
+lColorRun       :="${COL_CYN}"
 
 
 
@@ -258,7 +272,6 @@ resources: directories	#help: Copy Resources from Resources Directory to Target 
 		fi; \
 		\
 		lRsync_test=$$(rsync -aEim --dry-run "$$file" "$$lDestFile"); \
-		#echo "lRsync_test == $$lRsync_test";\
 		if [ -n "$$lRsync_test" ] ; \
 		then \
 			echo -e "${lColorRC}    RC  $$lDestFile ${CLREOL}${COL_STD}" $(TRACE_LOG) ;\
@@ -397,6 +410,11 @@ run-tests-auto-analysis-valgrind: tests	#help: Run the tests with callgrind anal
 # ------------------------------------------------------------------------------
 #   Other targets
 # ------------------------------------------------------------------------------
+
+##  @brief  Calls a script to create a zip archive from the current project.
+archive:	#help: Creates an archive of the current project.
+	@./scripts/generate-archive.sh
+
 
 ##  @brief  Target to generate Doxygen documentation.
 doxygen: directories	#help: Target to generate Doxygen documentation.
