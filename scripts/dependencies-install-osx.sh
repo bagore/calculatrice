@@ -11,7 +11,9 @@ set -x
 #
 #   Installation of needed dependencies
 #
-brew update
+echo "No dependencies to install."
+
+#brew update
 
 #brew install <package>
 

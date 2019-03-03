@@ -11,7 +11,9 @@ set -x
 #
 #   Installation of needed dependencies
 #
-sudo apt update  --allow-unauthenticated --allow-insecure-repositories
+echo "No dependencies to install."
+
+#sudo apt update  --allow-unauthenticated --allow-insecure-repositories
 
 #sudo apt install -y <package>
 
