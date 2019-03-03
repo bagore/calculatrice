@@ -43,3 +43,19 @@ script:
   - make
   - make tests
   - make run-tests-auto
+  - build-wrapper-linux-x86-64 --out-dir bw-output make
+  - sonar-scanner -X
+
+
+
+addons:
+  sonarcloud:
+    branches:
+      - master
+      - template-dev-CI-sonarcloud
+    organization: "unice-etu-gom-github"
+
+
+cache:
+    directories:
+        - '$HOME/.sonar/cache'
