@@ -5,12 +5,13 @@
 # It also has been inspired from :
 # https://codeburst.io/getting-started-with-travis-ci-f3223082f256
 
-sudo: false
+sudo: true
 language: cpp
 
 matrix:
     include:
             - os: linux
+              dist: xenial
               addons:
                   apt:
                       sources:
@@ -20,9 +21,14 @@ matrix:
                       - g++-7
                       - clang-3.8
             - os: osx
-              osx_image: xcode8
+              osx_image: xcode10.1
               env:
                   - MATRIX_EVAL="export CLICOLOR=1"
+
+before_install:
+    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then echo "$(pwd)";  bash ./scripts/dependencies-install-linux.sh ; fi;
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then echo "$(pwd)"; bash ./scripts/dependencies-install-osx.sh ; fi;
+
 
 #compiler:
 #  - gcc
