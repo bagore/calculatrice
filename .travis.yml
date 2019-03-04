@@ -11,7 +11,8 @@ language: cpp
 matrix:
     include:
             - os: linux
-              dist: xenial
+              #dist: xenial
+              dist: trusty
               addons:
                   apt:
                       sources:
@@ -20,6 +21,11 @@ matrix:
                       packages:
                       - g++-7
                       - clang-3.8
+                  sonarcloud:
+                      organization: "unice-etu-gom-github"
+                      branches:
+                      - master
+                      - template-dev-CI-sonarcloud
             - os: osx
               osx_image: xcode10.1
               env:
@@ -43,17 +49,10 @@ script:
   - make
   - make tests
   - make run-tests-auto
-  - build-wrapper-linux-x86-64 --out-dir bw-output make
-  - sonar-scanner -X
+  - make distclean
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then build-wrapper-linux-x86-64 --out-dir bw-output make target tests;fi;
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sonar-scanner -X; fi;
 
-
-
-addons:
-  sonarcloud:
-    branches:
-      - master
-      - template-dev-CI-sonarcloud
-    organization: "unice-etu-gom-github"
 
 
 cache:
