@@ -134,8 +134,13 @@ else
     endif
 endif
 
+
+# Bash format definitions
+FMT_STD:="${ESC_CHAR}[0m"
+FMT_BLD:="${ESC_CHAR}[1m"
+FMT_UDL:="${ESC_CHAR}[4m"
+
 # Bash colors list
-COL_STD:="${ESC_CHAR}[0m"
 COL_BLK:="${ESC_CHAR}[40m"
 COL_BLU:="${ESC_CHAR}[44m"
 COL_CYN:="${ESC_CHAR}[30;46m"
@@ -149,6 +154,7 @@ COL_YLW:="${ESC_CHAR}[30;103m"
 # Control char to fill a line
 CLREOL:="${ESC_CHAR}[K"
 
+
 # Aliases to define which color to use for this makefile's traces
 lColorCC        :="${COL_ORG}"
 lColorDoc       :="${COL_GRN}"
@@ -156,6 +162,7 @@ lColorLD        :="${COL_MAG}"
 lColorRC        :="${COL_YLW}"
 lColorRM        :="${COL_RED}"
 lColorRun       :="${COL_CYN}"
+lColorSrcList	:="${FMT_BLD}${FMT_UDL}"
 
 
 
@@ -242,7 +249,7 @@ tests: show_sources_tests resources $(TARGET_TESTS_AUTO) #help: Builds all test 
 
 ##  @brief  Target to display detected source files.
 show_sources: directories	#help: Displays detected source files.
-	@echo -e "\n\e[1;4mList of auto-detected sources :${COL_STD}\n" $(TRACE_LOG)
+	@echo -e "\n${lColorSrcList}List of auto-detected sources :${FMT_STD}\n" $(TRACE_LOG)
 	@for file in $(SOURCES) ; do \
 		echo "+-- $${file}" $(TRACE_LOG); \
 	done
@@ -251,7 +258,7 @@ show_sources: directories	#help: Displays detected source files.
 
 ##  @brief  Target to display detected test source files.
 show_sources_tests: directories	#help: Displays detected test source files.
-	@echo -e "\n\e[1;4mList of auto-detected test sources :${COL_STD}\n" $(TRACE_LOG)
+	@echo -e "\n${lColorSrcList}List of auto-detected test sources :${FMT_STD}\n" $(TRACE_LOG)
 	@for file in $(SOURCES_TST) ; do \
 		echo "+-- $${file}" $(TRACE_LOG); \
 	done
@@ -267,14 +274,14 @@ resources: directories	#help: Copy Resources from Resources Directory to Target 
 		lDestFile=$$(echo $$file |sed -e "s@$(RESDIR)@$(TARGETDIR)@"); \
 		if [ ! -d $$(dirname "$$lDestFile") ] ; \
 		then \
-			echo -e "${lColorRC}    RCD $$(dirname "$$lDestFile") ${CLREOL}${COL_STD}" $(TRACE_LOG) ;\
+			echo -e "${lColorRC}    RCD $$(dirname "$$lDestFile") ${CLREOL}${FMT_STD}" $(TRACE_LOG) ;\
 			mkdir -p $$(dirname "$$lDestFile"); \
 		fi; \
 		\
 		lRsync_test=$$(rsync -aEim --dry-run "$$file" "$$lDestFile"); \
 		if [ -n "$$lRsync_test" ] ; \
 		then \
-			echo -e "${lColorRC}    RC  $$lDestFile ${CLREOL}${COL_STD}" $(TRACE_LOG) ;\
+			echo -e "${lColorRC}    RC  $$lDestFile ${CLREOL}${FMT_STD}" $(TRACE_LOG) ;\
 			rsync -aEim "$$file" "$$lDestFile" $(TRACE_REDIRECT); \
 		fi; \
 	done #cp $(RESDIR)/* $(TARGETDIR)/
@@ -303,7 +310,7 @@ directories:	#help: Convenience target to make directories we'll need.
 
 ##  @brief  Target to generate object files from main sources.
 $(BUILDDIRSRC)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
-	@echo -e "${lColorCC}    CXX $@ ${CLREOL}${COL_STD}" $(TRACE_LOG)
+	@echo -e "${lColorCC}    CXX $@ ${CLREOL}${FMT_STD}" $(TRACE_LOG)
 	@mkdir -p $(dir $@) $(TRACE_REDIRECT)
 	@if [ ! "$(TRACES)" -eq "0" ] ; then \
 		echo "$(CXX) $(CFLAGS) $(INC) -c -o $@ $<" $(TRACE_REDIRECT); \
@@ -314,7 +321,7 @@ $(BUILDDIRSRC)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
 
 ##  @brief  Target to generate object files from test sources.
 $(BUILDDIRTST)/%.$(OBJEXT): $(TESTSDIR)/%.$(SRCEXT)
-	@echo -e "${lColorCC}    CXX $@${CLREOL}${COL_STD}" $(TRACE_LOG)
+	@echo -e "${lColorCC}    CXX $@${CLREOL}${FMT_STD}" $(TRACE_LOG)
 	@mkdir -p $(dir $@)
 	@if [ ! "$(TRACES)" -eq "0" ] ; then \
 		echo "$(CXX) $(CFLAGS) $(INC) -c -o $@ $<" $(TRACE_REDIRECT); \
@@ -330,7 +337,7 @@ $(BUILDDIRTST)/%.$(OBJEXT): $(TESTSDIR)/%.$(SRCEXT)
 
 ##  @brief  Main application's target.
 $(TARGET): $(OBJECTS)	#help: Main application's target.
-	@echo -e "${lColorLD}    LD  $@${CLREOL}${COL_STD}" $(TRACE_LOG)
+	@echo -e "${lColorLD}    LD  $@${CLREOL}${FMT_STD}" $(TRACE_LOG)
 	@if [ ! "$(TRACES)" -eq "0" ] ; then \
 		echo "$(CXX) -o $(TARGETDIR)/$(TARGET) $^ $(LIB)" $(TRACE_REDIRECT); \
 	fi
@@ -339,7 +346,7 @@ $(TARGET): $(OBJECTS)	#help: Main application's target.
 
 ##  @brief  Automated tests target.
 $(TARGET_TESTS_AUTO): $(OBJECTS_TST) $(filter-out $(BUILDDIRSRC)/main.$(OBJEXT), $(OBJECTS))	#help: Automated tests target.
-	@echo -e "${lColorLD}    LD  $@${CLREOL}${COL_STD}" $(TRACE_LOG)
+	@echo -e "${lColorLD}    LD  $@${CLREOL}${FMT_STD}" $(TRACE_LOG)
 	@if [ ! "$(TRACES)" -eq "0" ] ; then \
 		echo "$(CXX) -o $(TARGETDIR_TST)/$(TARGET_TESTS_AUTO) $^ $(LIB)" $(TRACE_REDIRECT); \
 	fi
@@ -353,21 +360,21 @@ $(TARGET_TESTS_AUTO): $(OBJECTS_TST) $(filter-out $(BUILDDIRSRC)/main.$(OBJEXT),
 
 ##  @brief  Target to remove objects only.
 clean:	#help: Target to remove objects only.
-	@echo -e "${lColorRM}    RM  ./$(BUILDDIR)/ ${CLREOL}$(COL_STD)" #$(TRACE_REDIRECT);
+	@echo -e "${lColorRM}    RM  ./$(BUILDDIR)/ ${CLREOL}$(FMT_STD)" #$(TRACE_REDIRECT);
 	@$(RM) -rvf ./$(BUILDDIR)/ #$(TRACE_REDIRECT)
 
 
 ##  @brief  Target to remove documentation only.
 clean-doc:	#help: Target to remove documentation only.
-	@echo -e "${lColorRM}    RM  ./$(DIR_DOC_OUT)/ ${CLREOL}$(COL_STD)" #$(TRACE_REDIRECT);
+	@echo -e "${lColorRM}    RM  ./$(DIR_DOC_OUT)/ ${CLREOL}$(FMT_STD)" #$(TRACE_REDIRECT);
 	@$(RM) -rvf ./$(DIR_DOC_OUT)/ #$(TRACE_REDIRECT)
 
 
 ##  @brief  Full Clean, Objects and Binaries.
 cleaner: clean clean-doc	#help: Full Clean, Objects and Binaries.
-	@echo -e "${lColorRM}    RM  ./$(TARGETDIR)/ ${CLREOL}$(COL_STD)"
+	@echo -e "${lColorRM}    RM  ./$(TARGETDIR)/ ${CLREOL}$(FMT_STD)"
 	@$(RM) -rvf $(TARGETDIR)
-	@echo -e "${lColorRM}    RM  ./$(DIR_OUTPUT)/ ${CLREOL}$(COL_STD)"
+	@echo -e "${lColorRM}    RM  ./$(DIR_OUTPUT)/ ${CLREOL}$(FMT_STD)"
 	@$(RM) -rvf $(DIR_OUTPUT)
 
 
@@ -377,12 +384,12 @@ cleaner: clean clean-doc	#help: Full Clean, Objects and Binaries.
 # ------------------------------------------------------------------------------
 
 run-target: target	#help: Run the target.
-	@echo -e "${lColorRun}    RUN $(TARGETDIR)/$(TARGET)${CLREOL}$(COL_STD)"
+	@echo -e "${lColorRun}    RUN $(TARGETDIR)/$(TARGET)${CLREOL}$(FMT_STD)"
 	$(TARGETDIR)/$(TARGET) $(TRACE_LOG)
 
 
 run-tests-auto: tests	#help: Run executable for automated tests.
-	@echo -e "${lColorRun}    RUN $(TARGETDIR_TST)/$(TARGET_TESTS_AUTO)${CLREOL}$(COL_STD)"
+	@echo -e "${lColorRun}    RUN $(TARGETDIR_TST)/$(TARGET_TESTS_AUTO)${CLREOL}$(FMT_STD)"
 	@pushd $(TARGETDIR_TST) 1>/dev/null; \
 		echo "[Repertoire '$$(pwd)']"; \
 		./$(TARGET_TESTS_AUTO) -d no $(TRACE_LOG);\
@@ -394,12 +401,12 @@ run-tests-auto: tests	#help: Run executable for automated tests.
 #   "analysis" targets
 # ------------------------------------------------------------------------------
 run-target-analysis-valgrind: target	#help: Run the target with callgrind analysis.
-	@echo -e "${lColorRun}    RUN VALGRIND $(TARGETDIR)/$(TARGET)${CLREOL}$(COL_STD)"
+	@echo -e "${lColorRun}    RUN VALGRIND $(TARGETDIR)/$(TARGET)${CLREOL}$(FMT_STD)"
 	valkyrie $(TARGETDIR)/$(TARGET) $(TRACE_LOG)
 
 
 run-tests-auto-analysis-valgrind: tests	#help: Run the tests with callgrind analysis.
-	@echo -e "${lColorRun}    RUN VALGRIND $(TARGETDIR_TST)/$(TARGET_TESTS_AUTO)${CLREOL}$(COL_STD)"
+	@echo -e "${lColorRun}    RUN VALGRIND $(TARGETDIR_TST)/$(TARGET_TESTS_AUTO)${CLREOL}$(FMT_STD)"
 	@pushd $(TARGETDIR_TST) 1>/dev/null; \
 		echo "[Repertoire '$$(pwd)']"; \
 		valkyrie ./$(TARGET_TESTS_AUTO) -d no $(TRACE_LOG);\
@@ -418,7 +425,7 @@ archive:	#help: Creates an archive of the current project.
 
 ##  @brief  Target to generate Doxygen documentation.
 doxygen: directories	#help: Target to generate Doxygen documentation.
-	@echo -e "${lColorDoc}    DOC $@${CLREOL}${COL_STD}" $(TRACE_LOG)
+	@echo -e "${lColorDoc}    DOC $@${CLREOL}${FMT_STD}" $(TRACE_LOG)
 	@if [ ! "$(TRACES)" -eq "0" ] ; then \
 		echo "$(BIN_DOXYGEN) $(DIR_DOC)/doxygen/doxygen.conf" $(TRACE_REDIRECT); \
 	fi
