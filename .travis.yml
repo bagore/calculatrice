@@ -22,10 +22,6 @@ matrix:
                       - g++-7
                       - clang-3.8
                   sonarcloud:
-                      organization: "unice-etu-gom-github"
-# deprecated :                      branches:
-# deprecated :                      - master
-# deprecated :                      - template-dev-CI-sonarcloud
             - os: osx
               osx_image: xcode10.1
               env:
@@ -50,8 +46,7 @@ script:
   - make tests
   - make run-tests-auto
   - make distclean
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then build-wrapper-linux-x86-64 --out-dir bw-output make target tests;fi;
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sonar-scanner -X; fi;
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash scripts/analysis-sonarqube-linux.sh; fi
 
 
 
