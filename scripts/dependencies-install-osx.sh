@@ -13,9 +13,11 @@ set -x
 #
 echo "No dependencies to install."
 
-#brew update
+brew update
 
 #brew install <package>
+
+brew install wxmac
 
 
 
