@@ -11,6 +11,8 @@
 #include <wx/panel.h>
 #include <wx/textctrl.h>
 
+class   NumPadPanel;
+
 /* ########################################################################## */
 /* ########################################################################## */
 
@@ -39,7 +41,8 @@ private:
     /** @brief  The panel containing everything. */
     std::unique_ptr<wxPanel>    m_panelPtr;
 
-    std::unique_ptr<wxTextCtrl> m_textControlPtr;
+    std::unique_ptr<NumPadPanel>    m_numPadPanelPtr;
+    std::unique_ptr<wxTextCtrl>     m_textControlPtr;
 
     float                       m_value;
 
@@ -51,7 +54,8 @@ private:
 // controls id
 enum
 {
-    ID_TextControl = wxID_HIGHEST + 1
+    ID_TextControl = wxID_HIGHEST + 1,
+    ID_NumPad
 };
 
 /* ########################################################################## */
