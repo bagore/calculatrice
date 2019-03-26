@@ -113,7 +113,7 @@ BEGIN_DECLARE_EVENT_TYPES()
 END_DECLARE_EVENT_TYPES()
 
 
-#define EVT_MYEVENT(func)                               \
+#define EVT_NUMPADPANELEVENT(func)                               \
     DECLARE_EVENT_TABLE_ENTRY( myEVT_NUMPADPANELEVENT,  \
         -1,                                    \
         -1,                                    \

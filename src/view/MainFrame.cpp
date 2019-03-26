@@ -30,7 +30,7 @@ using namespace view;
 /* ########################################################################## */
 
 BEGIN_EVENT_TABLE( MainFrame, wxFrame )
-    EVT_MYEVENT( MainFrame::on_numPadPanel_panelEvent )
+    EVT_NUMPADPANELEVENT( MainFrame::on_numPadPanel_panelEvent )
 END_EVENT_TABLE()
 
 /* ########################################################################## */
