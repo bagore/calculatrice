@@ -67,7 +67,7 @@
 # ##############################################################################
 
 ##  @brief  The Target Binary Program's name
-TARGET			:= hello_wxWidget
+TARGET			:= bagore-calculator
 
 ##  @brief  The test target's name
 TARGET_TESTS_AUTO	:= tests-auto
