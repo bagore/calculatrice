@@ -11,7 +11,12 @@ set -x
 #
 #   Installation of needed dependencies
 #
-echo "No dependencies to install."
+
+# C++14 - see https://gist.github.com/cotsog/3ce84675af0d74438d91#gistcomment-2027135
+sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+sudo apt-get update -qq
+sudo apt-get install -qq g++-6
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
 
 #sudo apt update  --allow-unauthenticated --allow-insecure-repositories
 
