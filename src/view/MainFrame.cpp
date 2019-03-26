@@ -31,6 +31,7 @@ using namespace view;
 
 BEGIN_EVENT_TABLE( MainFrame, wxFrame )
     EVT_NUMPADPANELEVENT( MainFrame::on_numPadPanel_panelEvent )
+    EVT_OPERATIONSPANELEVENT( MainFrame::on_operationsPanel_panelEvent )
 END_EVENT_TABLE()
 
 /* ########################################################################## */
@@ -81,6 +82,7 @@ void    MainFrame::_create_layout()
 
     wxSizer *p_sizerInputs  = new wxBoxSizer( wxHORIZONTAL );
     p_sizerInputs->Add( this->m_numPadPanelPtr.get(), 1, wxEXPAND );
+    p_sizerInputs->Add( this->m_operationsPanelPtr.get(), 1, wxEXPAND );
 
 
     wxSizer *p_sizerMain    = new wxBoxSizer( wxVERTICAL );
@@ -113,6 +115,10 @@ void    MainFrame::_create_ui(void)
     this->m_numPadPanelPtr
             = std::make_unique<NumPadPanel>( ID_NumPad,
                                              this->m_panelPtr.get() );
+
+    this->m_operationsPanelPtr
+            = std::make_unique<OperationsPanel>( ID_OperationsPanel,
+                                                 this->m_panelPtr.get() );
 
     this->m_textControlPtr
             = std::make_unique<wxTextCtrl>( this->m_panelPtr.get(),
@@ -150,6 +156,24 @@ void MainFrame::on_numPadPanel_panelEvent(NumPadPanelEvent &argEvent)
     {
         throw   std::logic_error( std::string(__PRETTY_FUNCTION__)
                                   + "Can't determine event type!" );
+    }
+}
+
+/* ########################################################################## */
+/* ########################################################################## */
+
+
+void MainFrame::on_operationsPanel_panelEvent(OperationsPanelEvent &argEvent)
+{
+    if( argEvent.operation() == '?' )
+    {
+        throw   std::logic_error( std::string(__PRETTY_FUNCTION__)
+                                  + "Invalid operation!" );
+    }
+    else
+    {
+        TRACE_DBG( "Receiving operation %c",
+                   argEvent.operation() );
     }
 }
 

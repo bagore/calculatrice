@@ -13,6 +13,7 @@
 
 /* Project includes*/
 #include "panels/NumPadPanel.h"
+#include "panels/OperationsPanel.h"
 
 /* ########################################################################## */
 /* ########################################################################## */
@@ -29,6 +30,7 @@ public:
 protected:
 
     void    on_numPadPanel_panelEvent(NumPadPanelEvent& argEvent);
+    void    on_operationsPanel_panelEvent(OperationsPanelEvent& argEvent);
 
 
 private:
@@ -46,8 +48,9 @@ private:
     /** @brief  The panel containing everything. */
     std::unique_ptr<wxPanel>    m_panelPtr;
 
-    std::unique_ptr<NumPadPanel>    m_numPadPanelPtr;
-    std::unique_ptr<wxTextCtrl>     m_textControlPtr;
+    std::unique_ptr<NumPadPanel>        m_numPadPanelPtr;
+    std::unique_ptr<OperationsPanel>    m_operationsPanelPtr;
+    std::unique_ptr<wxTextCtrl>         m_textControlPtr;
 
     float                       m_value;
 

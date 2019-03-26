@@ -10,7 +10,8 @@ namespace   view
 enum    EWidgetsIdentifiers
 {
     ID_TextControl = wxID_HIGHEST + 1,
-    ID_NumPad
+    ID_NumPad,
+    ID_OperationsPanel
 };
 
 }
