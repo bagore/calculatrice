@@ -11,13 +11,14 @@
 #include <wx/panel.h>
 #include <wx/textctrl.h>
 
-class   NumPadPanel;
+/* Project includes*/
+#include "NumPadPanel.h"
 
 /* ########################################################################## */
 /* ########################################################################## */
 
 class   MainFrame
-        :   public  wxFrame
+        :   public      wxFrame
 {
 public:
 
@@ -26,6 +27,10 @@ public:
 
 
 protected:
+
+    void    on_numPadPanel_panelEvent(NumPadPanelEvent& argEvent);
+
+
 private:
 
     void    _create_ui(void);
@@ -47,15 +52,7 @@ private:
     float                       m_value;
 
 
-};
-
-/* ########################################################################## */
-/* ########################################################################## */
-// controls id
-enum
-{
-    ID_TextControl = wxID_HIGHEST + 1,
-    ID_NumPad
+    DECLARE_EVENT_TABLE()
 };
 
 /* ########################################################################## */

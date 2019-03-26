@@ -12,8 +12,26 @@
 #include <wx/valnum.h>
 
 /* Project includes */
-#include "NumPadPanel.h"
+#include "EWidgetsIdentifiers.h"
+#include "traces.h"
 
+using namespace view;
+
+/* ########################################################################## */
+/* ########################################################################## */
+
+#define TRACE_DBG(format,...) \
+        TRACE_DBG_BASE( "view", format, ##__VA_ARGS__ );
+
+#define TRACE_ERR(format,...) \
+        TRACE_ERR_BASE( "view", format, ##__VA_ARGS__ );
+
+/* ########################################################################## */
+/* ########################################################################## */
+
+BEGIN_EVENT_TABLE( MainFrame, wxFrame )
+    EVT_MYEVENT( MainFrame::on_numPadPanel_panelEvent )
+END_EVENT_TABLE()
 
 /* ########################################################################## */
 /* ########################################################################## */
@@ -21,7 +39,7 @@
  *  @brief  Default constructor.
  */
 MainFrame::MainFrame ()
-    :   wxFrame (  NULL , wxID_ANY,  "Convertor" )
+    :   wxFrame (  NULL , wxID_ANY,  "Bagore's Calculator" )
     ,   m_value( 0 )
 {
     this->SetMinSize(wxSize( 500, 200 ) );
@@ -29,6 +47,8 @@ MainFrame::MainFrame ()
     this->_create_ui();
     this->_create_layout();
     this->_create_connections();
+
+    this->m_textControlPtr.get()->SetEditable( false );
 }
 
 /* ########################################################################## */
@@ -40,7 +60,6 @@ MainFrame::MainFrame ()
  */
 void    MainFrame::_create_connections(void)
 {
-
 }
 
 /* ########################################################################## */
@@ -109,6 +128,29 @@ void    MainFrame::_create_ui(void)
                                                 wxNUM_VAL_THOUSANDS_SEPARATOR |
                                                 wxNUM_VAL_NO_TRAILING_ZEROES
                                             ) );
+}
+
+/* ########################################################################## */
+/* ########################################################################## */
+
+
+void MainFrame::on_numPadPanel_panelEvent(NumPadPanelEvent &argEvent)
+{
+    if( argEvent.hasCommand() )
+    {
+        TRACE_DBG( "Receiving command %d",
+                   (int)argEvent.command() );
+    }
+    else if( argEvent.hasValue() )
+    {
+        TRACE_DBG( "Receiving value %d.",
+                   argEvent.value() );
+    }
+    else
+    {
+        throw   std::logic_error( std::string(__PRETTY_FUNCTION__)
+                                  + "Can't determine event type!" );
+    }
 }
 
 /* ########################################################################## */
