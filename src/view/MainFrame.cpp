@@ -30,6 +30,7 @@ using namespace view;
 /* ########################################################################## */
 
 BEGIN_EVENT_TABLE( MainFrame, wxFrame )
+    EVT_MEMORYPANELEVENT( MainFrame::on_memoryPanel_panelEvent )
     EVT_NUMPADPANELEVENT( MainFrame::on_numPadPanel_panelEvent )
     EVT_OPERATIONSPANELEVENT( MainFrame::on_operationsPanel_panelEvent )
 END_EVENT_TABLE()
@@ -83,6 +84,8 @@ void    MainFrame::_create_layout()
     wxSizer *p_sizerInputs  = new wxBoxSizer( wxHORIZONTAL );
     p_sizerInputs->Add( this->m_numPadPanelPtr.get(), 1, wxEXPAND );
     p_sizerInputs->AddSpacer( 10 );
+    p_sizerInputs->Add( this->m_memoryPanelPtr.get(), 1, wxEXPAND );
+    p_sizerInputs->AddSpacer( 10 );
     p_sizerInputs->Add( this->m_operationsPanelPtr.get(), 1, wxEXPAND );
 
 
@@ -113,6 +116,10 @@ void    MainFrame::_create_ui(void)
             = std::make_unique<wxPanel>(this, wxID_ANY);
 
 
+    this->m_memoryPanelPtr
+            = std::make_unique<MemoryPanel>( ID_Memory,
+                                             this->m_panelPtr.get() );
+
     this->m_numPadPanelPtr
             = std::make_unique<NumPadPanel>( ID_NumPad,
                                              this->m_panelPtr.get() );
@@ -135,6 +142,33 @@ void    MainFrame::_create_ui(void)
                                                 wxNUM_VAL_THOUSANDS_SEPARATOR |
                                                 wxNUM_VAL_NO_TRAILING_ZEROES
                                             ) );
+}
+
+/* ########################################################################## */
+/* ########################################################################## */
+
+
+void MainFrame::on_memoryPanel_panelEvent(MemoryPanelEvent &argEvent)
+{
+#if 1
+    TRACE_ERR( "Unimplemented method!" );
+#else
+    if( argEvent.hasCommand() )
+    {
+        TRACE_DBG( "Receiving command %d",
+                   (int)argEvent.command() );
+    }
+    else if( argEvent.hasValue() )
+    {
+        TRACE_DBG( "Receiving value %d.",
+                   argEvent.value() );
+    }
+    else
+    {
+        throw   std::logic_error( std::string(__PRETTY_FUNCTION__)
+                                  + "Can't determine event type!" );
+    }
+#endif
 }
 
 /* ########################################################################## */
