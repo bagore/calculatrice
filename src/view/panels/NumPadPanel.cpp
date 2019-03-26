@@ -10,6 +10,8 @@
 
 /* Project includes */
 #include "traces.h"
+#include "view/view_constants.h"
+using namespace view;
 
 /* ########################################################################## */
 /* ########################################################################## */
@@ -52,7 +54,10 @@ void    NumPadPanel::_create_buttonNum(wxGridSizer *argLayout, int argValue)
                                           wxPoint(20, 20) );
 
 
-    argLayout->Add( p_button.get(), 0, wxEXPAND );
+    argLayout->Add( p_button.get(), 0, wxSHRINK|wxALIGN_CENTER );
+
+    p_button.get()->SetMinSize( C_BUTTONS_DEFAULTSIZE );
+    p_button.get()->SetMaxSize( C_BUTTONS_DEFAULTSIZE );
 
     p_button->Connect(
                 wxEVT_COMMAND_BUTTON_CLICKED,
@@ -87,13 +92,19 @@ void    NumPadPanel::_create_uiAndLayout(void)
             = std::make_shared<wxButton>( this,
                                           wxID_ANY,
                                           C_LABEL_COMMA );
+    this->m_buttonCmdComma.get()->SetMinSize( C_BUTTONS_DEFAULTSIZE );
+    this->m_buttonCmdComma.get()->SetMaxSize( C_BUTTONS_DEFAULTSIZE );
+
+
     this->m_buttonCmdEnter
             = std::make_shared<wxButton>( this,
                                           wxID_ANY,
                                           C_LABEL_ENTER );
+    this->m_buttonCmdEnter.get()->SetMinSize( C_BUTTONS_DEFAULTSIZE );
+    this->m_buttonCmdEnter.get()->SetMaxSize( C_BUTTONS_DEFAULTSIZE );
 
     wxGridSizer*    p_layoutMain    = new wxGridSizer( 4, 3,
-                                                       3, 3 );
+                                                       10, 10 );
 
     this->_create_buttonNum( p_layoutMain, 7 );
     this->_create_buttonNum( p_layoutMain, 8 );
@@ -104,9 +115,9 @@ void    NumPadPanel::_create_uiAndLayout(void)
     this->_create_buttonNum( p_layoutMain, 1 );
     this->_create_buttonNum( p_layoutMain, 2 );
     this->_create_buttonNum( p_layoutMain, 3 );
-    p_layoutMain->Add(this->m_buttonCmdComma.get(), 0, wxEXPAND);
+    p_layoutMain->Add(this->m_buttonCmdComma.get(), 0, wxSHRINK|wxALIGN_CENTER);
     this->_create_buttonNum( p_layoutMain, 0 );
-    p_layoutMain->Add(this->m_buttonCmdEnter.get(), 0, wxEXPAND);
+    p_layoutMain->Add(this->m_buttonCmdEnter.get(), 0, wxSHRINK|wxALIGN_CENTER);
 
     this->SetSizer( p_layoutMain );
     this->SetMinSize(wxSize(400, 300));

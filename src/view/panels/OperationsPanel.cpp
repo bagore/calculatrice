@@ -10,6 +10,8 @@
 
 /* Project includes */
 #include "traces.h"
+#include "view/view_constants.h"
+using namespace view;
 
 /* ########################################################################## */
 /* ########################################################################## */
@@ -57,7 +59,10 @@ void    OperationsPanel::_create_button( const std::string    &argText )
             = std::make_shared<wxButton>( this,
                                           wxID_ANY,
                                           argText );
-//    wxString(argText).Clone() );
+
+    p_button.get()->SetMinSize( C_BUTTONS_DEFAULTSIZE );
+    p_button.get()->SetMaxSize( C_BUTTONS_DEFAULTSIZE );
+
 
     if(     (   this->m_layoutMainPtr->GetItemCount()
             %   this->m_layoutMainPtr->GetRows() )
@@ -65,7 +70,7 @@ void    OperationsPanel::_create_button( const std::string    &argText )
     {
         this->m_layoutMainPtr->SetCols( this->m_layoutMainPtr->GetCols() + 1 );
     }
-    this->m_layoutMainPtr->Add( p_button.get(), 0, wxEXPAND );
+    this->m_layoutMainPtr->Add( p_button.get(), 0, wxSHRINK|wxALIGN_CENTER );
 
 
     p_button->Connect(

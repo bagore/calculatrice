@@ -43,7 +43,7 @@ MainFrame::MainFrame ()
     :   wxFrame (  NULL , wxID_ANY,  "Bagore's Calculator" )
     ,   m_value( 0 )
 {
-    this->SetMinSize(wxSize( 500, 200 ) );
+    this->SetMinSize(wxSize( 700, 480 ) );
 
     this->_create_ui();
     this->_create_layout();
@@ -82,6 +82,7 @@ void    MainFrame::_create_layout()
 
     wxSizer *p_sizerInputs  = new wxBoxSizer( wxHORIZONTAL );
     p_sizerInputs->Add( this->m_numPadPanelPtr.get(), 1, wxEXPAND );
+    p_sizerInputs->AddSpacer( 10 );
     p_sizerInputs->Add( this->m_operationsPanelPtr.get(), 1, wxEXPAND );
 
 
