@@ -70,6 +70,15 @@ class   MemoryPanelEvent
 
 public:
 
+    typedef enum
+    {
+        EEventUnknown   = -1,
+        EEventMemClear  = 0,
+        EEventMemAdd,
+        EEventMemRecall
+    }   TeEventType;
+
+
     MemoryPanelEvent( wxWindow  *argWindow = (wxWindow*) NULL );
 
 
@@ -78,14 +87,14 @@ public:
 
 
     // accessors
-    char    operation(void) const;
-    void    setOperation(const char &argOperation);
+    TeEventType  eventType(void) const;
+    void        setEventType(const TeEventType &argEvent);
 
 
 
 private:
 
-    char    m_operation;
+    TeEventType  m_eventType;
 
 
 };

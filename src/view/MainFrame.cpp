@@ -150,25 +150,27 @@ void    MainFrame::_create_ui(void)
 
 void MainFrame::on_memoryPanel_panelEvent(MemoryPanelEvent &argEvent)
 {
-#if 1
-    TRACE_ERR( "Unimplemented method!" );
-#else
-    if( argEvent.hasCommand() )
+    switch( argEvent.eventType() )
     {
-        TRACE_DBG( "Receiving command %d",
-                   (int)argEvent.command() );
+        case MemoryPanelEvent::EEventMemAdd:
+            TRACE_DBG( "Pressed Memory Add." );
+            break;
+
+        case MemoryPanelEvent::EEventMemClear:
+            TRACE_DBG( "Pressed Memory Clear." );
+            break;
+
+        case MemoryPanelEvent::EEventMemRecall:
+            TRACE_DBG( "Pressed Memory Recall." );
+            break;
+
+        default:
+            throw   std::logic_error( std::string(__PRETTY_FUNCTION__)
+                                      + "Unknown event type "
+                                      + std::to_string( argEvent.eventType() )
+                                      + "!");
+            break;
     }
-    else if( argEvent.hasValue() )
-    {
-        TRACE_DBG( "Receiving value %d.",
-                   argEvent.value() );
-    }
-    else
-    {
-        throw   std::logic_error( std::string(__PRETTY_FUNCTION__)
-                                  + "Can't determine event type!" );
-    }
-#endif
 }
 
 /* ########################################################################## */
@@ -179,8 +181,23 @@ void MainFrame::on_numPadPanel_panelEvent(NumPadPanelEvent &argEvent)
 {
     if( argEvent.hasCommand() )
     {
-        TRACE_DBG( "Receiving command %d",
-                   (int)argEvent.command() );
+        switch( argEvent.command() )
+        {
+            case NumPadPanelEvent::CmdComma:
+                TRACE_DBG( "Receiving command 'Comma'." );
+                break;
+
+            case NumPadPanelEvent::CmdEnter:
+                TRACE_DBG( "Receiving command 'Enter'." );
+                break;
+
+            default:
+                throw   std::logic_error( std::string(__PRETTY_FUNCTION__)
+                                          + "Unknown command "
+                                          + std::to_string( argEvent.command() )
+                                          + "!");
+                break;
+        }
     }
     else if( argEvent.hasValue() )
     {

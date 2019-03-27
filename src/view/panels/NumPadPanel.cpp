@@ -151,12 +151,10 @@ void    NumPadPanel::on_buttonCmd_clicked(wxCommandEvent &argEvent)
 
     if( p_button->GetLabel() == C_LABEL_COMMA )
     {
-        TRACE_DBG( "Command button 'Comma' pressed." );
         lEvent.setCommand( NumPadPanelEvent::CmdComma );
     }
     else if( p_button->GetLabel() == C_LABEL_ENTER )
     {
-        TRACE_DBG( "Command button 'Enter' pressed." );
         lEvent.setCommand( NumPadPanelEvent::CmdEnter );
     }
     else

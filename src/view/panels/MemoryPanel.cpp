@@ -110,30 +110,24 @@ void    MemoryPanel::on_m_buttons_clicked(wxCommandEvent &argEvent)
      */
     MemoryPanelEvent lEvent( this );
 
-#if 0
-    if( p_button->GetLabel() == C_LABEL_COMMA )
+
+    if( p_button->GetLabel() == C_LABEL_MEMORY_ADD )
     {
-        TRACE_DBG( "Command button 'Comma' pressed." );
-        lEvent.setCommand( NumPadPanelEvent::CmdComma );
+        lEvent.setEventType( MemoryPanelEvent::EEventMemAdd );
     }
-    else if( p_button->GetLabel() == C_LABEL_ENTER )
+    else if( p_button->GetLabel() == C_LABEL_MEMORY_CLEAR )
     {
-        TRACE_DBG( "Command button 'Enter' pressed." );
-        lEvent.setCommand( NumPadPanelEvent::CmdEnter );
+        lEvent.setEventType( MemoryPanelEvent::EEventMemClear );
+    }
+    else if( p_button->GetLabel() == C_LABEL_MEMORY_RECALL )
+    {
+        lEvent.setEventType( MemoryPanelEvent::EEventMemRecall );
     }
     else
     {
         throw std::logic_error( std::string( __PRETTY_FUNCTION__ )
                                 + "::Event coming from an unknown button!" );
     }
-#elif 0
-    char lChar  = '\0';
-    p_button->GetLabel().at( 0 ).GetAsChar( &lChar );
-
-    lEvent.setOperation( lChar );
-#else
-    TRACE_ERR( "Unimplemented method !" )
-#endif
 
     if ( ProcessEvent( lEvent ) == false )
     {
@@ -149,7 +143,7 @@ IMPLEMENT_DYNAMIC_CLASS( MemoryPanelEvent, wxCommandEvent )
 DEFINE_EVENT_TYPE( MYEVT_MEMORYPANELEVENT )
 
 MemoryPanelEvent::MemoryPanelEvent(wxWindow *argWindow)
-    :   m_operation( '?' )
+    :   m_eventType( EEventUnknown )
 {
     SetEventType( MYEVT_MEMORYPANELEVENT );
     SetEventObject( argWindow );
@@ -166,17 +160,17 @@ wxEvent*    MemoryPanelEvent::Clone(void) const
 /* ########################################################################## */
 /* ########################################################################## */
 
-char    MemoryPanelEvent::operation(void) const
+MemoryPanelEvent::TeEventType    MemoryPanelEvent::eventType(void) const
 {
-    return this->m_operation;
+    return this->m_eventType;
 }
 
 /* ########################################################################## */
 /* ########################################################################## */
 
-void    MemoryPanelEvent::setOperation(const char &argOperation)
+void    MemoryPanelEvent::setEventType(const TeEventType &argEvent)
 {
-    this->m_operation   = argOperation;
+    this->m_eventType   = argEvent;
 }
 
 /* ########################################################################## */
