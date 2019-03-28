@@ -36,7 +36,7 @@ public:
 
 protected:
 
-    void    _create_button(const std::string   &argText);
+    std::shared_ptr<wxButton>   _create_button(const std::string   &argText);
 
 
 

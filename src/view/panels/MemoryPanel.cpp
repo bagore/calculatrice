@@ -8,6 +8,7 @@
 #include <wx/log.h>
 #include <wx/sizer.h>
 #include <wx/stattext.h>
+#include <wx/tooltip.h>
 
 /* Project includes */
 #include "traces.h"
@@ -46,15 +47,21 @@ MemoryPanel::MemoryPanel(int argID, wxPanel *argParent)
                                 0,
                                 wxSHRINK|wxALIGN_CENTER );
 
-    this->_create_button( C_LABEL_MEMORY_ADD );
-    this->_create_button( C_LABEL_MEMORY_CLEAR );
-    this->_create_button( C_LABEL_MEMORY_RECALL );
+    this->_create_button( C_LABEL_MEMORY_ADD ).get()
+            ->SetToolTip( new wxToolTip( "Memory Add" ) );
+
+    this->_create_button( C_LABEL_MEMORY_CLEAR ).get()
+            ->SetToolTip( new wxToolTip( "Memory Clear" ) );
+
+    this->_create_button( C_LABEL_MEMORY_RECALL ).get()
+            ->SetToolTip( new wxToolTip( "Memory Recall" ) );
 }
 
 /* ########################################################################## */
 /* ########################################################################## */
 
-void    MemoryPanel::_create_button( const std::string    &argText )
+std::shared_ptr<wxButton>
+        MemoryPanel::_create_button( const std::string    &argText )
 {
     std::shared_ptr<wxButton>   p_button
             = std::make_shared<wxButton>( this,
@@ -81,6 +88,8 @@ void    MemoryPanel::_create_button( const std::string    &argText )
 
 
     this->m_buttonsList.push_back( p_button );
+
+    return p_button;
 }
 
 /* ########################################################################## */
