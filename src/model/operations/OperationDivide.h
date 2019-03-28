@@ -1,30 +1,42 @@
-#ifndef VIEW_CONSTANTS_H
-#define VIEW_CONSTANTS_H
+#ifndef OPERATIONDIVIDE_H
+#define OPERATIONDIVIDE_H
 
 /* Inherited classes */
-
+#include "AbstractOperation.h"
 
 /* System includes */
 
 /* Libraries includes */
-#include <wx/colour.h>
-#include <wx/font.h>
-#include <wx/gdicmn.h>
 
 /* Project includes */
 
 /* ########################################################################## */
 /* ########################################################################## */
 
-namespace view
+class   OperationDivide
+        :   public  AbstractOperation
 {
-    extern const wxColour   C_BUTTONS_COLOR_BACKGROUND;
-    extern const wxColour   C_BUTTONS_COLOR_FOREGROUND;
-    extern const wxSize     C_BUTTONS_DEFAULTSIZE;
-    extern const wxFont     C_BUTTONS_FONT_DEFAULT;
-}
+public:
+
+    OperationDivide(void);
+
+
+    virtual double  operation(const std::vector<double> pOperandsList);
+
+
+
+protected:
+private:
+
+
+
+public:
+protected:
+private:
+
+};
 
 /* ########################################################################## */
 /* ########################################################################## */
 
-#endif  /*< VIEW_CONSTANTS_H */
+#endif  /*< OPERATIONDIVIDE_H */

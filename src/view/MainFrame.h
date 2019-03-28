@@ -6,6 +6,7 @@
 
 /* System includes */
 #include <memory>
+#include <string>
 
 /* Libraries includes */
 #include <wx/panel.h>
@@ -28,6 +29,9 @@ public:
 
     MainFrame();
     void SetModel(Model* model);
+
+    void    setText(const std::string& pText);
+
 
 
 protected:

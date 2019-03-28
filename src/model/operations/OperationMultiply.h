@@ -1,30 +1,42 @@
-#ifndef VIEW_CONSTANTS_H
-#define VIEW_CONSTANTS_H
+#ifndef OPERATIONMULTIPLY_H
+#define OPERATIONMULTIPLY_H
 
 /* Inherited classes */
-
+#include "AbstractOperation.h"
 
 /* System includes */
 
 /* Libraries includes */
-#include <wx/colour.h>
-#include <wx/font.h>
-#include <wx/gdicmn.h>
 
 /* Project includes */
 
 /* ########################################################################## */
 /* ########################################################################## */
 
-namespace view
+class   OperationMultiply
+        :   public  AbstractOperation
 {
-    extern const wxColour   C_BUTTONS_COLOR_BACKGROUND;
-    extern const wxColour   C_BUTTONS_COLOR_FOREGROUND;
-    extern const wxSize     C_BUTTONS_DEFAULTSIZE;
-    extern const wxFont     C_BUTTONS_FONT_DEFAULT;
-}
+public:
+
+    OperationMultiply(void);
+
+
+    virtual double  operation(const std::vector<double> pOperandsList);
+
+
+
+protected:
+private:
+
+
+
+public:
+protected:
+private:
+
+};
 
 /* ########################################################################## */
 /* ########################################################################## */
 
-#endif  /*< VIEW_CONSTANTS_H */
+#endif  /*< OPERATIONMULTIPLY_H */
