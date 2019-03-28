@@ -5,16 +5,16 @@
 #endif
 
 #include "MainApp.h"
-#include "view/MainFrame.h"
 
 wxDECLARE_APP(MainApp);
 
 bool MainApp::OnInit ()
 {
-    MainFrame *p_frame = new MainFrame();
-    p_frame->Show( true );
+    Model* p_model = new Model(0);
 
-    p_frame->setText( "Hello, World !" );
+    MainFrame *p_frame = new MainFrame();
+    p_frame->SetModel(p_model);
+    p_frame->Show( true );
 
     return true;
 }
