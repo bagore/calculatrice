@@ -62,6 +62,9 @@ void    OperationsPanel::_create_button( const std::string    &argText )
 
     p_button.get()->SetMinSize( C_BUTTONS_DEFAULTSIZE );
     p_button.get()->SetMaxSize( C_BUTTONS_DEFAULTSIZE );
+    p_button.get()->SetBackgroundColour(wxColour( "cyan" ) );
+    p_button.get()->SetForegroundColour( C_BUTTONS_COLOR_FOREGROUND );
+    p_button.get()->SetFont( C_BUTTONS_FONT_DEFAULT );
 
 
     if(     (   this->m_layoutMainPtr->GetItemCount()

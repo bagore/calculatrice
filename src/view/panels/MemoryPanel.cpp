@@ -39,7 +39,7 @@ MemoryPanel::MemoryPanel(int argID, wxPanel *argParent)
                  wxSize( -1, 30 ),
                  wxBORDER_DEFAULT )
     ,   m_layoutMainPtr( new wxGridSizer( 4, 0,
-                                       3, 3 ) )
+                                          3, 3 ) )
 {
     this->SetSizer( this->m_layoutMainPtr );
 
@@ -81,6 +81,9 @@ std::shared_ptr<wxButton>
     this->m_layoutMainPtr->Add( p_button.get(), 0, wxSHRINK|wxALIGN_CENTER );
 
 
+    p_button->SetBackgroundColour( wxColour( "magenta" ) );
+    p_button->SetForegroundColour( C_BUTTONS_COLOR_FOREGROUND );
+    p_button->SetFont( C_BUTTONS_FONT_DEFAULT );
     p_button->Connect(
                 wxEVT_COMMAND_BUTTON_CLICKED,
                 wxCommandEventHandler(

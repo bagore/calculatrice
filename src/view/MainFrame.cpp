@@ -142,6 +142,7 @@ void    MainFrame::_create_ui(void)
                                                 wxNUM_VAL_THOUSANDS_SEPARATOR |
                                                 wxNUM_VAL_NO_TRAILING_ZEROES
                                             ) );
+    this->m_textControlPtr.get()->SetFont( C_BUTTONS_FONT_DEFAULT );
 }
 
 /* ########################################################################## */
