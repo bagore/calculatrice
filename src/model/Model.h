@@ -1,26 +1,53 @@
-#ifndef  MODEL_H
-#define  MODEL_H
+#ifndef MODEL_H
+#define MODEL_H
 
-/**
- *  @file   model.h
- *  @brief  
- */
+/* Inherited classes */
 
+
+/* System includes */
+#include <memory>
 #include <string>
+#include <vector>
 
-using namespace std;
-// Model is responsible for data get and set
+/* Libraries includes */
 
-class Model {
-    public:
-        Model(const double &data);
-        Model() { } // default constructor
-        double Data();
- 
-        void SetData(const double &data);
+/* Project includes */
+#include "operations/AbstractOperation.h"
+#include "Pile.h"
 
-    private:
-        double data = 0;
+/* ########################################################################## */
+/* ########################################################################## */
+
+class   Model
+{
+public:
+
+    Model(void);
+
+
+    std::shared_ptr<AbstractOperation>
+            operation(const std::string& pOperationID);
+
+
+    std::shared_ptr<Pile>   operandes(void);
+
+
+
+protected:
+private:
+
+
+
+public:
+protected:
+private:
+
+    std::vector<std::shared_ptr<AbstractOperation>>     m_operationsList;
+    std::shared_ptr<Pile>                               m_operands;
+
 };
+
+/* ########################################################################## */
+/* ########################################################################## */
 
 #endif  /*< MODEL_H */

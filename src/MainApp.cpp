@@ -10,7 +10,7 @@ wxDECLARE_APP(MainApp);
 
 bool MainApp::OnInit ()
 {
-    Model* p_model = new Model(0);
+    Model* p_model = new Model();
 
     MainFrame *p_frame = new MainFrame();
     p_frame->SetModel(p_model);
