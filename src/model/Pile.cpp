@@ -1,4 +1,4 @@
-#include "Pile.hpp"
+#include "Pile.h"
 
 
 Pile::Pile()//Définition du constructeur
@@ -26,6 +26,7 @@ double Pile::depiler()
 
 void Pile::vider()
 {
+    bool check = false;
     while(this->m_pile.empty() == false)
     {
         this->m_pile.pop();
