@@ -59,6 +59,10 @@ void    NumPadPanel::_create_buttonNum(wxGridSizer *argLayout, int argValue)
     p_button.get()->SetMinSize( C_BUTTONS_DEFAULTSIZE );
     p_button.get()->SetMaxSize( C_BUTTONS_DEFAULTSIZE );
 
+    p_button->SetBackgroundColour(C_BUTTONS_COLOR_BACKGROUND );
+    p_button->SetForegroundColour( C_BUTTONS_COLOR_FOREGROUND );
+    p_button->SetFont( C_BUTTONS_FONT_DEFAULT );
+
     p_button->Connect(
                 wxEVT_COMMAND_BUTTON_CLICKED,
                 wxCommandEventHandler( NumPadPanel::on_buttonNum_clicked ) );
@@ -94,6 +98,9 @@ void    NumPadPanel::_create_uiAndLayout(void)
                                           C_LABEL_COMMA );
     this->m_buttonCmdComma.get()->SetMinSize( C_BUTTONS_DEFAULTSIZE );
     this->m_buttonCmdComma.get()->SetMaxSize( C_BUTTONS_DEFAULTSIZE );
+    this->m_buttonCmdComma.get()->SetBackgroundColour(wxColour(100, 100, 100));
+    this->m_buttonCmdComma.get()->SetForegroundColour( C_BUTTONS_COLOR_FOREGROUND );
+    this->m_buttonCmdComma.get()->SetFont( C_BUTTONS_FONT_DEFAULT );
 
 
     this->m_buttonCmdEnter
@@ -102,6 +109,12 @@ void    NumPadPanel::_create_uiAndLayout(void)
                                           C_LABEL_ENTER );
     this->m_buttonCmdEnter.get()->SetMinSize( C_BUTTONS_DEFAULTSIZE );
     this->m_buttonCmdEnter.get()->SetMaxSize( C_BUTTONS_DEFAULTSIZE );
+    this->m_buttonCmdEnter.get()
+            ->SetBackgroundColour( wxColor( 255, 0, 0 ) );
+    this->m_buttonCmdEnter.get()
+            ->SetForegroundColour( C_BUTTONS_COLOR_FOREGROUND );
+    this->m_buttonCmdEnter.get()
+            ->SetFont( C_BUTTONS_FONT_DEFAULT );
 
     wxGridSizer*    p_layoutMain    = new wxGridSizer( 4, 3,
                                                        10, 10 );
@@ -120,7 +133,7 @@ void    NumPadPanel::_create_uiAndLayout(void)
     p_layoutMain->Add(this->m_buttonCmdEnter.get(), 0, wxSHRINK|wxALIGN_CENTER);
 
     this->SetSizer( p_layoutMain );
-    this->SetMinSize(wxSize(400, 300));
+    this->SetMinSize(wxSize(250, 275));
 }
 
 /* ########################################################################## */

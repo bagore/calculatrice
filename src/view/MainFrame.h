@@ -6,6 +6,7 @@
 
 /* System includes */
 #include <memory>
+#include <string>
 
 /* Libraries includes */
 #include <wx/panel.h>
@@ -25,6 +26,9 @@ class   MainFrame
 public:
 
     MainFrame();
+
+
+    void    setText(const std::string& pText);
 
 
 
