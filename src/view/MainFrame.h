@@ -15,8 +15,8 @@
 #include "panels/MemoryPanel.h"
 #include "panels/NumPadPanel.h"
 #include "panels/OperationsPanel.h"
-#include "model/model.h"
-#include "view/view.h"
+#include "model/Model.h"
+#include "view/View.h"
 
 /* ########################################################################## */
 /* ########################################################################## */
