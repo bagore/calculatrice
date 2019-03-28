@@ -148,7 +148,7 @@ void    MainFrame::_create_ui(void)
                                                 wxNUM_VAL_NO_TRAILING_ZEROES
                                             ) );
 
-    this->m_textControlPtr.get()->SetFont( C_BUTTONS_FONT_DEFAULT );
+    this->m_view->SetFont( C_BUTTONS_FONT_DEFAULT );
 }
 
 /* ########################################################################## */
@@ -240,7 +240,7 @@ void MainFrame::on_operationsPanel_panelEvent(OperationsPanelEvent &argEvent)
 
 void    MainFrame::setText(const std::string &pText)
 {
-    this->m_textControlPtr.get()->SetValue( pText );
+    this->m_view->SetValue( pText );
 }
 
 /* ########################################################################## */
