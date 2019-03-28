@@ -13,5 +13,8 @@ bool MainApp::OnInit ()
 {
     MainFrame *p_frame = new MainFrame();
     p_frame->Show( true );
+
+    p_frame->setText( "Hello, World !" );
+
     return true;
 }
