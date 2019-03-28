@@ -35,7 +35,7 @@ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
 sudo apt install -y \
 	libwxgtk3.0-dev \
 	libwxbase3.0-dev \
-	libwxgtk3.0-0 \
+	libwxgtk3.0 \
 	wx-common
 
 
