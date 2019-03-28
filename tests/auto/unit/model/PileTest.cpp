@@ -7,7 +7,7 @@
 #include "test/catch.hpp"
 
 /* Project includes */
-#include "model/Pile.hpp"
+#include "model/Pile.h"
 /*
 Le but de ce fichier est de tester les 5 fonctions de ma classe Pile si la classe pile ne fonctionne pas il faudra penser à les changer.
 le premier test case verifiera les méthodes empiler et depiler

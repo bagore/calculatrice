@@ -26,7 +26,6 @@ double Pile::depiler()
 
 void Pile::vider()
 {
-    bool check = false;
     while(this->m_pile.empty() == false)
     {
         this->m_pile.pop();
