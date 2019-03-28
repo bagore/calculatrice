@@ -7,6 +7,8 @@
 #   include <wx/wx.h>
 #endif
 
+#include "view/MainFrame.h"
+
 class   MainApp
         :   public  wxApp
 {

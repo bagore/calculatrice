@@ -1,3 +1,6 @@
+#ifndef  MODEL_H
+#define  MODEL_H
+
 /**
  *  @file   model.h
  *  @brief  
@@ -8,15 +11,16 @@
 using namespace std;
 // Model is responsible for data get and set
 
-
 class Model {
     public:
-        Model(const string &data);
+        Model(const double &data);
         Model() { } // default constructor
-        string Data();
+        double Data();
  
-        void SetData(const string &data);
+        void SetData(const double &data);
 
     private:
-        string data = "";
+        double data = 0;
 };
+
+#endif  /*< MODEL_H */

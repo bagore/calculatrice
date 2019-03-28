@@ -15,6 +15,8 @@
 #include "panels/MemoryPanel.h"
 #include "panels/NumPadPanel.h"
 #include "panels/OperationsPanel.h"
+#include "model/model.h"
+#include "view/view.h"
 
 /* ########################################################################## */
 /* ########################################################################## */
@@ -25,7 +27,7 @@ class   MainFrame
 public:
 
     MainFrame();
-
+    void SetModel(Model* model);
 
 
 protected:
@@ -41,8 +43,6 @@ private:
     void    _create_layout(void);
     void    _create_connections(void);
 
-
-
 public:
 protected:
 private:
@@ -53,10 +53,12 @@ private:
     std::unique_ptr<MemoryPanel>        m_memoryPanelPtr;
     std::unique_ptr<NumPadPanel>        m_numPadPanelPtr;
     std::unique_ptr<OperationsPanel>    m_operationsPanelPtr;
-    std::unique_ptr<wxTextCtrl>         m_textControlPtr;
+
+    View*                       m_view;
 
     float                       m_value;
 
+    Model*                      m_model;
 
     DECLARE_EVENT_TABLE()
 };

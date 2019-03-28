@@ -49,8 +49,12 @@ MainFrame::MainFrame ()
     this->_create_ui();
     this->_create_layout();
     this->_create_connections();
+    
+    //this->m_view.get()->SetEditable( false );
+}
 
-    this->m_textControlPtr.get()->SetEditable( false );
+void MainFrame::SetModel (Model* model){
+    this->m_model = model;
 }
 
 /* ########################################################################## */
@@ -75,7 +79,7 @@ void    MainFrame::_create_layout()
 {
     wxSizer *p_sizerText    = new wxBoxSizer( wxHORIZONTAL );
     p_sizerText->Add( 25, 0, 0 );
-    p_sizerText->Add( this->m_textControlPtr.get(),
+    p_sizerText->Add( this->m_view,
                       100 );/*,
                       wxEXPAND,
                       5 );*/
@@ -87,7 +91,6 @@ void    MainFrame::_create_layout()
     p_sizerInputs->Add( this->m_memoryPanelPtr.get(), 1, wxEXPAND );
     p_sizerInputs->AddSpacer( 10 );
     p_sizerInputs->Add( this->m_operationsPanelPtr.get(), 1, wxEXPAND );
-
 
     wxSizer *p_sizerMain    = new wxBoxSizer( wxVERTICAL );
 
@@ -115,7 +118,6 @@ void    MainFrame::_create_ui(void)
     this->m_panelPtr
             = std::make_unique<wxPanel>(this, wxID_ANY);
 
-
     this->m_memoryPanelPtr
             = std::make_unique<MemoryPanel>( ID_Memory,
                                              this->m_panelPtr.get() );
@@ -126,10 +128,10 @@ void    MainFrame::_create_ui(void)
 
     this->m_operationsPanelPtr
             = std::make_unique<OperationsPanel>( ID_OperationsPanel,
-                                                 this->m_panelPtr.get() );
+                                             this->m_panelPtr.get() );
 
-    this->m_textControlPtr
-            = std::make_unique<wxTextCtrl>( this->m_panelPtr.get(),
+    this->m_view
+            = new View( this->m_panelPtr.get(),
                                             ID_TextControl,
                                             wxEmptyString,
                                             wxDefaultPosition,
@@ -146,7 +148,6 @@ void    MainFrame::_create_ui(void)
 
 /* ########################################################################## */
 /* ########################################################################## */
-
 
 void MainFrame::on_memoryPanel_panelEvent(MemoryPanelEvent &argEvent)
 {

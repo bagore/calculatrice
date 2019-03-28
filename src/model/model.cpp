@@ -3,16 +3,16 @@
  *  @brief  
  */
 
-#include "model.h"
+#include "Model.h"
 
-Model::Model(const string &data) {
+Model::Model(const double &data) {
     this->SetData(data);
 }
 
-string Model::Data(){
+double Model::Data(){
     return this->data;
 }
 
-void Model::SetData(const string &data) {
+void Model::SetData(const double &data) {
     this->data = data;
 }
