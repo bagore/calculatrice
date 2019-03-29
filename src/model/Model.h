@@ -12,6 +12,7 @@
 /* Libraries includes */
 
 /* Project includes */
+#include "CurrentEntry.h"
 #include "operations/AbstractOperation.h"
 #include "Pile.h"
 
@@ -23,6 +24,9 @@ class   Model
 public:
 
     Model(void);
+
+
+    std::shared_ptr<CurrentEntry>   currentEntry(void);
 
 
     std::shared_ptr<AbstractOperation>
@@ -42,6 +46,7 @@ public:
 protected:
 private:
 
+    std::shared_ptr<CurrentEntry>                       m_currentEntry;
     std::vector<std::shared_ptr<AbstractOperation>>     m_operationsList;
     std::shared_ptr<Pile>                               m_operands;
 

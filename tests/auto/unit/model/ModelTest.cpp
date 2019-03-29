@@ -42,3 +42,16 @@ TEST_CASE( "Model interface -Operands list" )
 
 /* ########################################################################## */
 /* ########################################################################## */
+
+TEST_CASE( "Model interface - Current Entry" )
+{
+    Model   lModel;
+
+    REQUIRE( lModel.currentEntry().get()->value() == 0 );
+
+    lModel.currentEntry().get()->addChar('9');
+    REQUIRE( lModel.currentEntry().get()->value() == 9 );
+}
+
+/* ########################################################################## */
+/* ########################################################################## */
