@@ -277,6 +277,30 @@ void MainFrame::on_operationsPanel_panelEvent(OperationsPanelEvent &argEvent)
             /* MODEL CHANGE : 
                 Ask for right computing of last pushed numbers */
 
+        /* If current value not empty, push it on the stack */
+        if( ! this->m_model->currentEntry()->isEmpty() )
+        {
+            this->m_model->operandes()
+                    ->empiler( this->m_model->currentEntry()->value() );
+            this->m_model->currentEntry()->clear();
+        }
+
+        std::vector<double> lOperands;
+        lOperands.insert( lOperands.begin(),
+                          this->m_model->operandes()->depiler() );
+        lOperands.insert( lOperands.begin(),
+                          this->m_model->operandes()->depiler() );
+
+        std::string lOperation;
+        lOperation += argEvent.operation();
+        double  lResult
+                = this->m_model->operation( lOperation )
+                  ->operation( lOperands );
+
+        this->m_model->operandes()->empiler( lResult );
+
+        TRACE_DBG( "Result of operation is %lf",
+                   lResult );
     }
 
     this->m_view->render();
