@@ -9,6 +9,7 @@
 #   include  <wx/wx.h>
 #endif
 
+#include <wx/log.h>
 #include <wx/valnum.h>
 
 /* Project includes */
@@ -298,22 +299,36 @@ void MainFrame::on_operationsPanel_panelEvent(OperationsPanelEvent &argEvent)
             this->m_model->currentEntry()->clear();
         }
 
-        std::vector<double> lOperands;
-        lOperands.insert( lOperands.begin(),
-                          this->m_model->operandes()->depiler() );
-        lOperands.insert( lOperands.begin(),
-                          this->m_model->operandes()->depiler() );
+        try
+        {
+            std::vector<double> lOperands;
+            lOperands.insert( lOperands.begin(),
+                              this->m_model->operandes()->depiler() );
+            lOperands.insert( lOperands.begin(),
+                              this->m_model->operandes()->depiler() );
 
-        std::string lOperation;
-        lOperation += argEvent.operation();
-        double  lResult
-                = this->m_model->operation( lOperation )
-                  ->operation( lOperands );
+            std::string lOperation;
+            lOperation += argEvent.operation();
+            double  lResult
+                    = this->m_model->operation( lOperation )
+                      ->operation( lOperands );
 
-        this->m_model->operandes()->empiler( lResult );
+            this->m_model->operandes()->empiler( lResult );
 
-        TRACE_DBG( "Result of operation is %lf",
-                   lResult );
+            TRACE_DBG( "Result of operation is %lf",
+                       lResult );
+
+        }
+        catch( const std::exception& pException)
+        {
+            wxLogWarning( _( std::string( "An error occured while performing"
+                                      " operation !\n" )
+                             + pException.what() ) );
+        }
+        catch(...)
+        {
+            wxLogWarning( _( "Unknown exception !" ) );
+        }
     }
 
     this->m_view->render();

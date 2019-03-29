@@ -35,7 +35,7 @@ double  OperationDivide::operation(const std::vector<double> pOperandsList)
     if( pOperandsList.at(1) == 0 )
     {
         throw   std::range_error( std::string( __PRETTY_FUNCTION__ )
-                                  + "::I refuse to divide by zero! " );
+                                  + ":\n\nI refuse to divide by zero! " );
     }
 
 

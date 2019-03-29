@@ -18,6 +18,12 @@ size_t Pile::nombreElements() const
 
 double Pile::depiler()
 {
+    if( this->m_pile.empty() )
+    {
+        throw   std::runtime_error( std::string(__PRETTY_FUNCTION__)
+                                    + " :\nOperands stack is empty !" );
+    }
+
     double toto =0;
     toto = this->m_pile.top();
     this->m_pile.pop();
