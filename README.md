@@ -21,3 +21,41 @@
 | [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=bagore_calculatrice&metric=sqale_index)](https://sonarcloud.io/dashboard?id=bagore_calculatrice) |
 | [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=bagore_calculatrice&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=bagore_calculatrice) |
 
+
+## To build and run
+
+__Please note :__ This application has been developped on a Ubuntu/Unity
+system. Its behaviour and appearance may vary depending on the platform.
+
+
+First, clone the repository :
+~~~~~~~~~~{sh}
+git clone https://github.com/bagore/calculatrice
+cd calculatrice
+~~~~~~~~~~
+
+
+Then, you can run eiher a partial build (main application only) or more
+complete builds including tests and/or documentation.
+~~~~~~~~~~{sh}
+# Default/partial build :
+make
+
+# Complete build :
+make all
+
+# Tests build :
+make tests
+~~~~~~~~~~
+
+
+Once the project has been built, you can run it through the Makefile (you can
+also have access to generated binaries in the automatically created directory
+`out/bin/`.
+~~~~~~~~~~{sh}
+# To run the main target :
+make run-target
+
+# To run unit tests :
+make run-tests-auto
+~~~~~~~~~~
