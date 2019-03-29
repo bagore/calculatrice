@@ -17,12 +17,21 @@
 /* ########################################################################## */
 
 Model::Model(void)
-    :   m_operands( std::make_shared<Pile>() )
+    :   m_currentEntry( std::make_shared<CurrentEntry>() )
+    ,   m_operands( std::make_shared<Pile>() )
 {
     this->m_operationsList.push_back( std::make_shared<OperationAdd>() );
     this->m_operationsList.push_back( std::make_shared<OperationDivide>() );
     this->m_operationsList.push_back( std::make_shared<OperationMultiply>() );
     this->m_operationsList.push_back( std::make_shared<OperationRemove>() );
+}
+
+/* ########################################################################## */
+/* ########################################################################## */
+
+std::shared_ptr<CurrentEntry>   Model::currentEntry(void)
+{
+    return this->m_currentEntry;
 }
 
 /* ########################################################################## */
