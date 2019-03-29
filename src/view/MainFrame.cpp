@@ -51,6 +51,7 @@ MainFrame::MainFrame ()
     this->_create_layout();
     this->_create_connections();
     
+    
     //this->m_view.get()->SetEditable( false );
 }
 
@@ -67,6 +68,7 @@ void MainFrame::SetModel (Model* model){
  */
 void    MainFrame::_create_connections(void)
 {
+    this->m_view->setModel(this->m_model);
 }
 
 /* ########################################################################## */
@@ -148,7 +150,7 @@ void    MainFrame::_create_ui(void)
                                                 wxNUM_VAL_NO_TRAILING_ZEROES
                                             ) );
 
-    this->m_view->SetFont( C_BUTTONS_FONT_DEFAULT );
+    //this->m_view->SetFont( C_BUTTONS_FONT_DEFAULT );
 }
 
 /* ########################################################################## */
@@ -160,14 +162,19 @@ void MainFrame::on_memoryPanel_panelEvent(MemoryPanelEvent &argEvent)
     {
         case MemoryPanelEvent::EEventMemAdd:
             TRACE_DBG( "Pressed Memory Add." );
+            /* EVENT ADD MEMORY */
             break;
 
         case MemoryPanelEvent::EEventMemClear:
             TRACE_DBG( "Pressed Memory Clear." );
+            /* EVENT CLEAR MEMORY */
+
             break;
 
         case MemoryPanelEvent::EEventMemRecall:
             TRACE_DBG( "Pressed Memory Recall." );
+            /* EVENT RECALL MEMORY */
+
             break;
 
         default:
@@ -177,6 +184,9 @@ void MainFrame::on_memoryPanel_panelEvent(MemoryPanelEvent &argEvent)
                                       + "!");
             break;
     }
+
+    this->m_view->render();
+
 }
 
 /* ########################################################################## */
@@ -191,10 +201,18 @@ void MainFrame::on_numPadPanel_panelEvent(NumPadPanelEvent &argEvent)
         {
             case NumPadPanelEvent::CmdComma:
                 TRACE_DBG( "Receiving command 'Comma'." );
+                /* EVENT COMMA */
+                /* MODEL CHANGE : 
+                    Change decimal flag to true */
+
                 break;
 
             case NumPadPanelEvent::CmdEnter:
                 TRACE_DBG( "Receiving command 'Enter'." );
+                /* EVENT ENTER */
+                /* MODEL CHANGE : 
+                    Add current input into Pile */
+
                 break;
 
             default:
@@ -209,12 +227,17 @@ void MainFrame::on_numPadPanel_panelEvent(NumPadPanelEvent &argEvent)
     {
         TRACE_DBG( "Receiving value %d.",
                    argEvent.value() );
+        /* EVENT DIGIT */
+        /* MODEL CHANGE : 
+            Add digit into current input */
     }
     else
     {
         throw   std::logic_error( std::string(__PRETTY_FUNCTION__)
                                   + "Can't determine event type!" );
     }
+
+    this->m_view->render();
 }
 
 /* ########################################################################## */
@@ -232,7 +255,13 @@ void MainFrame::on_operationsPanel_panelEvent(OperationsPanelEvent &argEvent)
     {
         TRACE_DBG( "Receiving operation %c",
                    argEvent.operation() );
+        /* EVENT OPERATION */
+            /* MODEL CHANGE : 
+                Ask for right computing of last pushed numbers */
+
     }
+
+    this->m_view->render();
 }
 
 /* ########################################################################## */
