@@ -57,6 +57,7 @@ MainFrame::MainFrame ()
 
 void MainFrame::SetModel (Model* model){
     this->m_model = model;
+    this->m_view->setModel(this->m_model);
 }
 
 /* ########################################################################## */
@@ -68,7 +69,6 @@ void MainFrame::SetModel (Model* model){
  */
 void    MainFrame::_create_connections(void)
 {
-    this->m_view->setModel(this->m_model);
 }
 
 /* ########################################################################## */
@@ -237,6 +237,7 @@ void MainFrame::on_numPadPanel_panelEvent(NumPadPanelEvent &argEvent)
         /* EVENT DIGIT */
         /* MODEL CHANGE : 
             Add digit into current input */
+        this->m_model->operandes()->empiler(5);
     }
     else
     {
