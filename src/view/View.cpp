@@ -10,18 +10,28 @@ void View::render(){
 
     std::stringstream ss;
     std::string stringToRender = "";
+    std::string lValueString    = "";
 
     std::stack<double> laPile = m_model->operandes()->getClonePile();
     while(!laPile.empty()){
-        ss << "[";
+        lValueString    = "[";
+        ss.str("");
         ss << laPile.top();
+        lValueString   += ss.str();
+        lValueString   += "]";
+        
+        stringToRender = lValueString + stringToRender;
+        /*
+        ss << "[";
+        ss << laPile.top();*/
         laPile.pop();
-        ss << "]";
+       // ss << "]";
     }
     
-    ss << "[";
-    ss << this->m_model->currentEntry()->value();
-    wxString wxs_value = wxString(ss.str());
+   // ss << "[";
+    stringToRender += "[";
+    stringToRender += std::to_string(this->m_model->currentEntry()->value());
+    wxString wxs_value = wxString(stringToRender);
 
     this->ChangeValue(wxs_value);
     
