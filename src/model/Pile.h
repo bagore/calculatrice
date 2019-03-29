@@ -1,3 +1,5 @@
+#ifndef  PILE_H
+#define  PILE_H
 #include <iostream>
 #include <stack>
 
@@ -20,3 +22,5 @@ public:
     size_t nombreElements() const;
     bool estVide() const;
 };
+
+#endif
