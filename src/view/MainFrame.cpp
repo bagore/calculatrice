@@ -163,17 +163,24 @@ void MainFrame::on_memoryPanel_panelEvent(MemoryPanelEvent &argEvent)
         case MemoryPanelEvent::EEventMemAdd:
             TRACE_DBG( "Pressed Memory Add." );
             /* EVENT ADD MEMORY */
+            /* MODEL CHANGE : 
+                Current value becomes memory value */
+                
             break;
 
         case MemoryPanelEvent::EEventMemClear:
             TRACE_DBG( "Pressed Memory Clear." );
             /* EVENT CLEAR MEMORY */
+            /* MODEL CHANGE : 
+                Memory value is set to 0 */
 
             break;
 
         case MemoryPanelEvent::EEventMemRecall:
             TRACE_DBG( "Pressed Memory Recall." );
             /* EVENT RECALL MEMORY */
+            /* MODEL CHANGE : 
+                Memory value becomes current value */
 
             break;
 
