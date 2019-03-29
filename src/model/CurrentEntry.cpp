@@ -65,6 +65,22 @@ void    CurrentEntry::clear(void)
 /* ########################################################################## */
 /* ########################################################################## */
 
+bool    CurrentEntry::isEmpty(void) const
+{
+    bool    retval  = true;
+
+    if(     ! this->m_vectorDecimal.empty()
+        ||  ! this->m_vectorInt.empty() )
+    {
+        retval  = false;
+    }
+
+    return retval;
+}
+
+/* ########################################################################## */
+/* ########################################################################## */
+
 void    CurrentEntry::removeChar(void)
 {
     if( ! this->m_vectorDecimal.empty() )
@@ -83,6 +99,38 @@ void    CurrentEntry::removeChar(void)
     {
         throw std::runtime_error( std::string( __PRETTY_FUNCTION__ )
                                   + " :: No more char to remove." );
+    }
+}
+
+/* ########################################################################## */
+/* ########################################################################## */
+
+void    CurrentEntry::setValue(const double &argValue)
+{
+    this->clear();
+
+    int     lEntier     = (int) argValue;
+    double  lDecimal    = argValue - lEntier;
+
+    while( lEntier != 0 )
+    {
+        this->m_vectorInt.insert( this->m_vectorInt.begin(),
+                                  (lEntier %10) + '0' );
+        lEntier /= 10;
+    }
+
+    if( lDecimal != 0 )
+    {
+        this->addChar( ',' );
+
+        int     lMaxPrecision  = 10;
+        while(      lDecimal != 0
+                &&  lMaxPrecision != 0 )
+        {
+            this->m_vectorDecimal.insert( this->m_vectorDecimal.begin(),
+                                      ((int)(lDecimal * 10)) + '0' );
+            lMaxPrecision--;
+        }
     }
 }
 

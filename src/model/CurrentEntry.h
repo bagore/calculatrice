@@ -23,7 +23,9 @@ public:
     void    addChar(const char pChar);
     void    removeChar(void);
 
+    bool    isEmpty(void) const;
     double  value(void) const;
+    void    setValue(const double& argValue);
 
     void    clear(void);
 

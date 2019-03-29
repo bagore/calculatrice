@@ -18,6 +18,7 @@
 
 Model::Model(void)
     :   m_currentEntry( std::make_shared<CurrentEntry>() )
+    ,   m_memory( std::make_shared<Memory>() )
     ,   m_operands( std::make_shared<Pile>() )
 {
     this->m_operationsList.push_back( std::make_shared<OperationAdd>() );
@@ -32,6 +33,14 @@ Model::Model(void)
 std::shared_ptr<CurrentEntry>   Model::currentEntry(void)
 {
     return this->m_currentEntry;
+}
+
+/* ########################################################################## */
+/* ########################################################################## */
+
+std::shared_ptr<Memory> Model::memoire(void)
+{
+    return this->m_memory;
 }
 
 /* ########################################################################## */

@@ -13,6 +13,7 @@
 
 /* Project includes */
 #include "CurrentEntry.h"
+#include "Memory.h"
 #include "operations/AbstractOperation.h"
 #include "Pile.h"
 
@@ -36,6 +37,9 @@ public:
     std::shared_ptr<Pile>   operandes(void);
 
 
+    std::shared_ptr<Memory> memoire(void);
+
+
 
 protected:
 private:
@@ -47,6 +51,7 @@ protected:
 private:
 
     std::shared_ptr<CurrentEntry>                       m_currentEntry;
+    std::shared_ptr<Memory>                             m_memory;
     std::vector<std::shared_ptr<AbstractOperation>>     m_operationsList;
     std::shared_ptr<Pile>                               m_operands;
 

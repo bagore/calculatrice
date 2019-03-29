@@ -165,7 +165,12 @@ void MainFrame::on_memoryPanel_panelEvent(MemoryPanelEvent &argEvent)
             /* EVENT ADD MEMORY */
             /* MODEL CHANGE : 
                 Current value becomes memory value */
-                
+            this->m_model->memoire()->add(
+                        this->m_model->currentEntry()->value() );
+            this->m_model->currentEntry()->clear();
+
+            TRACE_DBG( "Memory has now value of %lf",
+                       this->m_model->memoire()->value() );
             break;
 
         case MemoryPanelEvent::EEventMemClear:
@@ -173,7 +178,7 @@ void MainFrame::on_memoryPanel_panelEvent(MemoryPanelEvent &argEvent)
             /* EVENT CLEAR MEMORY */
             /* MODEL CHANGE : 
                 Memory value is set to 0 */
-
+            this->m_model->memoire()->clear();
             break;
 
         case MemoryPanelEvent::EEventMemRecall:
@@ -181,6 +186,12 @@ void MainFrame::on_memoryPanel_panelEvent(MemoryPanelEvent &argEvent)
             /* EVENT RECALL MEMORY */
             /* MODEL CHANGE : 
                 Memory value becomes current value */
+
+            this->m_model->currentEntry()->setValue(
+                        this->m_model->memoire()->value() );
+
+            TRACE_DBG( "Current value is now %lf",
+                       this->m_model->currentEntry()->value() );
 
             break;
 
@@ -211,16 +222,27 @@ void MainFrame::on_numPadPanel_panelEvent(NumPadPanelEvent &argEvent)
                 /* EVENT COMMA */
                 /* MODEL CHANGE : 
                     Change decimal flag to true */
-
+                try
+                {
+                    this->m_model->currentEntry()->addChar( ',' );
+                }
+                catch(...)
+                {
+                    /* If we add several commas, then an exception is thrown. */
+                }
                 break;
+
 
             case NumPadPanelEvent::CmdEnter:
                 TRACE_DBG( "Receiving command 'Enter'." );
                 /* EVENT ENTER */
                 /* MODEL CHANGE : 
                     Add current input into Pile */
-
+                this->m_model->operandes()
+                        ->empiler( this->m_model->currentEntry()->value() );
+                this->m_model->currentEntry()->clear();
                 break;
+
 
             default:
                 throw   std::logic_error( std::string(__PRETTY_FUNCTION__)
@@ -232,12 +254,13 @@ void MainFrame::on_numPadPanel_panelEvent(NumPadPanelEvent &argEvent)
     }
     else if( argEvent.hasValue() )
     {
-        TRACE_DBG( "Receiving value %d.",
-                   argEvent.value() );
         /* EVENT DIGIT */
         /* MODEL CHANGE : 
             Add digit into current input */
-        this->m_model->operandes()->empiler(5);
+
+        this->m_model->currentEntry()->addChar( argEvent.value() + '0' );
+        TRACE_DBG( "Current value is now %lf",
+                   this->m_model->currentEntry()->value() );
     }
     else
     {
@@ -267,6 +290,30 @@ void MainFrame::on_operationsPanel_panelEvent(OperationsPanelEvent &argEvent)
             /* MODEL CHANGE : 
                 Ask for right computing of last pushed numbers */
 
+        /* If current value not empty, push it on the stack */
+        if( ! this->m_model->currentEntry()->isEmpty() )
+        {
+            this->m_model->operandes()
+                    ->empiler( this->m_model->currentEntry()->value() );
+            this->m_model->currentEntry()->clear();
+        }
+
+        std::vector<double> lOperands;
+        lOperands.insert( lOperands.begin(),
+                          this->m_model->operandes()->depiler() );
+        lOperands.insert( lOperands.begin(),
+                          this->m_model->operandes()->depiler() );
+
+        std::string lOperation;
+        lOperation += argEvent.operation();
+        double  lResult
+                = this->m_model->operation( lOperation )
+                  ->operation( lOperands );
+
+        this->m_model->operandes()->empiler( lResult );
+
+        TRACE_DBG( "Result of operation is %lf",
+                   lResult );
     }
 
     this->m_view->render();
