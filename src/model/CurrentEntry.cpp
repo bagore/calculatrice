@@ -64,6 +64,22 @@ void    CurrentEntry::clear(void)
 /* ########################################################################## */
 /* ########################################################################## */
 
+bool    CurrentEntry::isEmpty(void) const
+{
+    bool    retval  = true;
+
+    if(     ! this->m_vectorDecimal.empty()
+        ||  ! this->m_vectorInt.empty() )
+    {
+        retval  = false;
+    }
+
+    return retval;
+}
+
+/* ########################################################################## */
+/* ########################################################################## */
+
 void    CurrentEntry::removeChar(void)
 {
     if( ! this->m_vectorDecimal.empty() )
