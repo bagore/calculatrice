@@ -104,6 +104,38 @@ void    CurrentEntry::removeChar(void)
 /* ########################################################################## */
 /* ########################################################################## */
 
+void    CurrentEntry::setValue(const double &argValue)
+{
+    this->clear();
+
+    int     lEntier     = (int) argValue;
+    double  lDecimal    = argValue - lEntier;
+
+    while( lEntier != 0 )
+    {
+        this->m_vectorInt.insert( this->m_vectorInt.begin(),
+                                  (lEntier %10) + '0' );
+        lEntier /= 10;
+    }
+
+    if( lDecimal != 0 )
+    {
+        this->addChar( ',' );
+
+        int     lMaxPrecision  = 10;
+        while(      lDecimal != 0
+                &&  lMaxPrecision != 0 )
+        {
+            this->m_vectorDecimal.insert( this->m_vectorDecimal.begin(),
+                                      ((int)(lDecimal * 10)) + '0' );
+            lMaxPrecision--;
+        }
+    }
+}
+
+/* ########################################################################## */
+/* ########################################################################## */
+
 double  CurrentEntry::value(void) const
 {
     double  retval  = 0;

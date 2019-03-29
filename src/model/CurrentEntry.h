@@ -25,6 +25,7 @@ public:
 
     bool    isEmpty(void) const;
     double  value(void) const;
+    void    setValue(const double& argValue);
 
     void    clear(void);
 

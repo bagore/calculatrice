@@ -165,7 +165,12 @@ void MainFrame::on_memoryPanel_panelEvent(MemoryPanelEvent &argEvent)
             /* EVENT ADD MEMORY */
             /* MODEL CHANGE : 
                 Current value becomes memory value */
-                
+            this->m_model->memoire()->add(
+                        this->m_model->currentEntry()->value() );
+            this->m_model->currentEntry()->clear();
+
+            TRACE_DBG( "Memory has now value of %lf",
+                       this->m_model->memoire()->value() );
             break;
 
         case MemoryPanelEvent::EEventMemClear:
@@ -173,7 +178,7 @@ void MainFrame::on_memoryPanel_panelEvent(MemoryPanelEvent &argEvent)
             /* EVENT CLEAR MEMORY */
             /* MODEL CHANGE : 
                 Memory value is set to 0 */
-
+            this->m_model->memoire()->clear();
             break;
 
         case MemoryPanelEvent::EEventMemRecall:
@@ -181,6 +186,12 @@ void MainFrame::on_memoryPanel_panelEvent(MemoryPanelEvent &argEvent)
             /* EVENT RECALL MEMORY */
             /* MODEL CHANGE : 
                 Memory value becomes current value */
+
+            this->m_model->currentEntry()->setValue(
+                        this->m_model->memoire()->value() );
+
+            TRACE_DBG( "Current value is now %lf",
+                       this->m_model->currentEntry()->value() );
 
             break;
 
