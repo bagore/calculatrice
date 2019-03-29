@@ -37,3 +37,7 @@ bool Pile::estVide()const
     return this->m_pile.empty();
 }
 
+std::stack<double> Pile::getClonePile(){
+    std::stack<double> clonePile = this->m_pile; // = operator is sucharged in order to clone
+    return clonePile;
+}

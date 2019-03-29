@@ -21,6 +21,8 @@ public:
     void vider();
     size_t nombreElements() const;
     bool estVide() const;
+    std::stack<double> getClonePile();
+
 };
 
 #endif
