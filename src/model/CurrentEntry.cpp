@@ -4,6 +4,7 @@
 /* System includes */
 #include <math.h>
 #include <stdexcept>
+#include <string>
 
 /* Libraries includes */
 
