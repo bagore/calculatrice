@@ -211,16 +211,27 @@ void MainFrame::on_numPadPanel_panelEvent(NumPadPanelEvent &argEvent)
                 /* EVENT COMMA */
                 /* MODEL CHANGE : 
                     Change decimal flag to true */
-
+                try
+                {
+                    this->m_model->currentEntry()->addChar( ',' );
+                }
+                catch(...)
+                {
+                    /* If we add several commas, then an exception is thrown. */
+                }
                 break;
+
 
             case NumPadPanelEvent::CmdEnter:
                 TRACE_DBG( "Receiving command 'Enter'." );
                 /* EVENT ENTER */
                 /* MODEL CHANGE : 
                     Add current input into Pile */
-
+                this->m_model->operandes()
+                        ->empiler( this->m_model->currentEntry()->value() );
+                this->m_model->currentEntry()->clear();
                 break;
+
 
             default:
                 throw   std::logic_error( std::string(__PRETTY_FUNCTION__)
@@ -234,9 +245,9 @@ void MainFrame::on_numPadPanel_panelEvent(NumPadPanelEvent &argEvent)
     {
         TRACE_DBG( "Receiving value %d.",
                    argEvent.value() );
-        /* EVENT DIGIT */
-        /* MODEL CHANGE : 
-            Add digit into current input */
+        this->m_model->currentEntry()->addChar( argEvent.value() + '0' );
+        TRACE_DBG( "Current value is now %lf",
+                   this->m_model->currentEntry()->value() );
     }
     else
     {
